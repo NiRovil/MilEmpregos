@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from usuarios.validation import *
+from django.contrib import messages
 
 def cadastro_candidato(request):
     
@@ -22,16 +23,18 @@ def cadastro_candidato(request):
         )
         user.save()
         messages.success(request, 'Usuário cadastrado com sucesso!')
+        return redirect('login_candidato')
     else:
-        return render(request, 'cadastro.html')
+        return render(request, 'cadastro_candidato.html')
 
-def login(request):
+def login_candidato(request):
     
     """Login de candidatos."""
-    
-    if request.method == 'POST':
+
+    return render(request, 'login.html')
+    """ if request.method == 'POST':
         
         email = request.POST['email']
         senha = request.POST['senha']
         valida_login(request, email, senha)
-                
+                 """
