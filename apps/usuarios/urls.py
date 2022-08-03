@@ -2,7 +2,8 @@ from django.urls import path
 from usuarios import views
 
 urlpatterns = [
-    path('cadastro-candidato/', views.cadastro_candidato, name='cadastro_candidato'),
-    path('login-candidato/', views.login_candidato, name='login_candidato'),
-    path('dashboard/', views.dashboard, name='dashboard')
+    path('cadastro/', views.cadastro, name='cadastro'),
+    path('login/', views.login, name='login'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('perfil/', views.perfil, name='perfil')
 ]

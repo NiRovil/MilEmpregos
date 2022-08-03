@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="{% static 'dash.css' %}">
+    <link rel="stylesheet" href="{% static 'form.css' %}">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <title>Perfil</title>
+</head>
+
+<body>
+    <div id="throbber" style="display:none; min-height:120px;"></div>
+    <div id="noty-holder"></div>
+
+    <div id="wrapper">
+        {% include 'usuarios/navegacao.html' %}
+        <div class="container-fluid">
+            <div class="row text-center">
+                <div class="col-md-12 dashhead">
+                    <body>
+                        <div class="testbox">
+                            <form action="/">
+                                <div class="banner">
+                                    <h1>Seu perfil</h1>
+                                </div>
+                                <h2>Atualize seu perfil</h2>
+                                {% if user.is_staff %}
+                                {% include 'partials/empresa.html' %}
+                                {% else %}
+                                {% include 'partials/candidato.html' %}
+                                {% endif %}
+                                <div class="btn-block">
+                                    <button type="submit" href="/">Send</button>
+                                </div>
+                            </form>
+                        </div>
+                    </body>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
