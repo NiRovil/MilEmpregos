@@ -1,15 +1,13 @@
 from django.contrib import messages
-from django.shortcuts import render ,redirect
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
-def valida_cadastro_nome(request, nome):
+def valida_cadastro_nome(request, nome, sobrenome):
 
     """Verifica se o campo nome está em branco."""
 
-    if not nome.strip():
-        messages.error(request, 'Campo nome não pode estar em branco!')
-        return redirect('cadastro_candidato')
+    if not nome.strip() or not sobrenome.strip():
+        messages.error(request, 'Campo nome e sobrenome não pode estar em branco!')
+        return True
 
 def valida_cadastro_email(request, email):
 
@@ -17,15 +15,15 @@ def valida_cadastro_email(request, email):
 
     if not email.strip():
         messages.error(request, 'Campo email não pode estar em branco!')
-        return redirect('cadastro_candidato')
+        return True
 
 def valida_cadastro_senha(request, senha, senha_confirmacao):
 
-    """Verifica se as senhas informadas são iguais."""
+    """Verifica se as senhas informadas são diferentes."""
 
     if senha != senha_confirmacao:
         messages.error(request, 'As senhas não coincidem!')
-        return redirect('cadastro_candidato')
+        return True
 
 def valida_conflito_email(request, email):
 
@@ -33,24 +31,4 @@ def valida_conflito_email(request, email):
 
     if User.objects.filter(email=email).exists():
         messages.error(request, 'Email já cadastrado!')
-        return redirect('cadastro_candidato')
-
-def valida_login(request, email, senha):
-
-    """Verifica se o email e senha estão sendo preenchidos."""
-
-    if email == "" or senha == "":
-        messages.error(request, 'Verifique os campos email e senha!')
-        return redirect('login')
-
-def login_candidato(request, email, senha):
-
-    """Valida e loga o usuário."""
-
-    if User.objects.filter(email=email).exists():
-        nome = User.objects.filter(email=email).values_list('username', flat=True).get()
-        usuario = authenticate(request, username=nome, password=senha)
-        if usuario is not None:
-            login(request, usuario)
-            return redirect('dashboard')
-    return render(request, 'login.html')
+        return True

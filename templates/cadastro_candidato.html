@@ -15,7 +15,6 @@
     {% include 'partials/alertas.html' %}
 
     <div class="container" >
-        
         <a class="links" id="paracadastro"></a>
         <a class="links" id="paralogin"></a>
         
@@ -25,10 +24,14 @@
                 <form method="post" action="{% url 'cadastro_candidato' %}"> 
                     {% csrf_token %}
                     <h1>Cadastro Candidato</h1> 
-            
                     <p> 
-                        <label for="nome_cad">Seu nome</label>
-                        <input id="nome_cad" name="nome" required="required" type="text" placeholder="Nicolas R. Vilela" />
+                        <label for="nome_cad">Nome</label>
+                        <input id="nome_cad" name="nome" required="required" type="text" placeholder="Nicolas" />
+                    </p>
+
+                    <p> 
+                        <label for="nome_cad">Sobrenome</label>
+                        <input id="nome_cad" name="sobrenome" required="required" type="text" placeholder="NRobert Vilela" />
                     </p>
             
                     <p> 
@@ -52,7 +55,7 @@
             
                     <p class="link">  
                     Já tem conta?
-                    <a href="#paralogin"> Ir para Login </a>
+                    <a href="{% url 'login_candidato' %}"> Ir para Login </a>
                     </p>
                 </form>
             </div>
