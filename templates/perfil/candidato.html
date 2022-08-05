@@ -15,7 +15,7 @@
                 <p>Nome Completo</p>
                 {% for candidato in candidatos %}
                     {% if user.id == candidato.usuario_candidato_id %}
-                        <input type="textarea" name="nome_candidato" placeholder="{{candidato.nome_candidato}}" /> 
+                        <input type="textarea" name="nome_candidato" placeholder="{{candidato}}" /> 
                     {% else %}                
                         <input type="textarea" name="nome_candidato" placeholder="Insira seu nome aqui!" />
                     {% endif %}

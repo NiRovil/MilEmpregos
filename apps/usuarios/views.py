@@ -1,5 +1,4 @@
-from datetime import date
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, redirect
 from usuarios.validation import *
 from usuarios.models import Empresa, Candidato, Experiencia
 from django.contrib import messages
@@ -75,8 +74,9 @@ def login(request):
 
 def dashboard(request):
 
+    empresas = Empresa.objects.all()
     candidatos = Candidato.objects.all()
-    contexto = {'candidatos':candidatos}
+    contexto = {'candidatos':candidatos, 'empresas':empresas}
 
     return render(request, 'base_dash.html', contexto)
 
@@ -96,7 +96,6 @@ def perfil_candidato(request):
         )
 
         candidato.save()
-
 
         return redirect('experiencia')
 
@@ -122,14 +121,6 @@ def atualiza_candidato(request):
     contexto = {'candidatos':candidatos}
 
     return render(request, 'base_perfil.html', contexto)
-
-def perfil_empresa(request):
-
-    pass
-
-def atualiza_empresa(request):
-
-    pass
 
 def experiencia(request):
 
@@ -184,3 +175,39 @@ def atualiza_experiencia(request):
     contexto = {'experiencias':experiencias}
 
     return render(request, 'base_experiencia.html', contexto)
+
+def perfil_empresa(request):
+
+    if request.method == 'POST':
+        usuario_empresa = request.user.id
+        nome_empresa = request.POST['nome_empresa']
+
+        empresa = Empresa.objects.create(
+            usuario_empresa_id = usuario_empresa,
+            nome_empresa = nome_empresa
+        )
+
+        empresa.save()
+
+        return redirect('dashboard')
+    
+    empresas = Empresa.objects.all()
+    contexto = {'empresas':empresas}
+
+    return render(request, 'base_perfil.html', contexto)
+
+def atualiza_empresa(request):
+
+    if request.method == 'POST':
+        usuario = request.user.id
+        c = Empresa.objects.get(usuario_empresa_id=usuario)
+        c.nome_empresa = request.POST['nome_empresa']
+
+        c.save()
+
+        return redirect('dashboard')
+    
+    empresas = Empresa.objects.all()
+    contexto = {'empresas':empresas}
+
+    return render(request, 'base_perfil.html', contexto)
