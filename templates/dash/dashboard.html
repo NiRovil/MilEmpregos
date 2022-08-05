@@ -17,7 +17,13 @@
                                         <h1>Bem vindo, {{empresa.nome_empresa}}!</h1>
                                     {% endif %}
                                 {% else %}
-                                    <h1>Bem vindo, {{user.first_name}} {{user.last_name}}!</h1>
+                                    {% for candidato in candidatos %}
+                                        {% if user.id == candidato.usuario_candidato_id %}
+                                            <h1>Bem vindo, {{user.first_name}} {{user.last_name}}!</h1>
+                                        {% else %}
+                                            <h1>Bem vindo, para começar, atualize suas informações na aba perfil e experiencia.</h1>
+                                        {% endif %}
+                                    {% endfor %}      
                                 {% endif %}
                             </div>
                         </form>

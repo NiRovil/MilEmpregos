@@ -43,9 +43,10 @@ def cadastro(request):
         )
         user.save()
         messages.success(request, 'Usuário cadastrado com sucesso!')
+
         return redirect('login')
-    else:
-        return render(request, 'usuarios/cadastro.html')
+
+    return render(request, 'registro/cadastro.html')
 
 def login(request):
     
@@ -64,16 +65,20 @@ def login(request):
             if autenticacao is not None:
                 login_auth(request, autenticacao)
                 return redirect('dashboard')
-            messages.error(request, 'Email ou senha incorretos!')
+            messages.error(request, 'Senha incorreta!')
             return redirect('login')
-        
-        return render(request, 'usuarios/login.html')
-    else:
-        return render(request, 'usuarios/login.html')
+
+        messages.error(request, 'Usuário não encontrado! Favor, verifique o email ou cadastre-se!')
+        return render(request, 'registro/login.html')
+    
+    return render(request, 'registro/login.html')
 
 def dashboard(request):
 
-    return render(request, 'base_dash.html')
+    candidatos = Candidato.objects.all()
+    contexto = {'candidatos':candidatos}
+
+    return render(request, 'base_dash.html', contexto)
 
 def perfil_candidato(request):
 
@@ -93,7 +98,7 @@ def perfil_candidato(request):
         candidato.save()
 
 
-        return render(request, 'base_dash.html')
+        return redirect('experiencia')
 
     candidatos = Candidato.objects.all()
     contexto = {'candidatos':candidatos}
@@ -101,9 +106,6 @@ def perfil_candidato(request):
     return render(request, 'base_perfil.html', contexto)
 
 def atualiza_candidato(request):
-
-    candidatos = Candidato.objects.all()
-    contexto = {'candidatos':candidatos}
 
     if request.method == 'POST':
         usuario = request.user.id
@@ -114,7 +116,10 @@ def atualiza_candidato(request):
 
         c.save()
 
-        return render(request, 'base_dash.html')
+        return redirect('atualiza_experiencia')
+
+    candidatos = Candidato.objects.all()
+    contexto = {'candidatos':candidatos}
 
     return render(request, 'base_perfil.html', contexto)
 
@@ -133,7 +138,10 @@ def experiencia(request):
         empresa = request.POST['empresa_anterior']
         emprego_atual = request.POST['emprego_atual']
         data_inicio = request.POST['data_inicio']
-        data_fim = request.POST['data_fim']
+        if request.POST['data_fim'] == '':
+            data_fim = '9999-12-31'
+        else:
+            data_fim = request.POST['data_fim']
         descricao = request.POST['descricao']
 
         experiencia = Experiencia.objects.create(
@@ -147,7 +155,7 @@ def experiencia(request):
 
         experiencia.save()
 
-        return render(request, 'base_dash.html')
+        return redirect('dashboard')
 
     experiencias = Experiencia.objects.all()
     contexto = {'experiencias':experiencias}
@@ -170,7 +178,7 @@ def atualiza_experiencia(request):
 
         e.save()
 
-        return render(request, 'base_dash.html')
+        return redirect('dashboard')
 
     experiencias = Experiencia.objects.all()
     contexto = {'experiencias':experiencias}

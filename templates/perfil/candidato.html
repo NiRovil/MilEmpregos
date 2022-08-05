@@ -13,13 +13,13 @@
         <h2>Atualize seu perfil</h2>
             <div class="item">
                 <p>Nome Completo</p>
-                {% if candidatos %}
                 {% for candidato in candidatos %}
-                <input type="textarea" name="nome_candidato" placeholder="{{candidato.nome_candidato}}" /> 
+                    {% if user.id == candidato.usuario_candidato_id %}
+                        <input type="textarea" name="nome_candidato" placeholder="{{candidato.nome_candidato}}" /> 
+                    {% else %}                
+                        <input type="textarea" name="nome_candidato" placeholder="Insira seu nome aqui!" />
+                    {% endif %}
                 {% endfor %}
-                {% else %}
-                <input type="textarea" name="nome_candidato" placeholder="Insira seu nome aqui" />
-                {% endif %}   
             </div> 
             <p>Pretensão Salárial</p>
             <select name="faixa" id="faixa_salarial">

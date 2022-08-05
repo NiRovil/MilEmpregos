@@ -14,12 +14,14 @@
     <div class="textarea">
         <p>Empresa</p>
         {% if experiencias %}
-        {% for experiencia in experiencias %}
-        <input type="textarea" name="empresa_anterior" placeholder="{{experiencia.empresa_anterior}}" /> 
-        {% endfor %}
+            {% for experiencia in experiencias %}
+                {% if user.id == experiencia.usuario_experiencia_id %}
+                    <input type="textarea" name="empresa_anterior" placeholder="{{experiencia.empresa_anterior}}" /> 
+                {% endif %}
+            {% endfor %}
         {% else %}
-        <input type="textarea" name="empresa_anterior" placeholder="Insira o nome da sua empresa aqui." />
-        {% endif %}
+            <input type="textarea" name="empresa_anterior" placeholder="Insira o nome da empresa aqui." />
+        {% endif %}        
     </div>
     <div class="item">
         <p>Emprego Atual?</p>
@@ -38,7 +40,15 @@
     </div>
     <div class="textarea">
         <p>Descrição das Atividades</p>
-        <input type="textarea" name="descricao" placeholder="{{experiencia.descricao}}" />
+        {% if experiencias %}
+            {% for experiencia in experiencias %}
+                {% if user.id == experiencia.usuario_experiencia_id %}
+                    <input type="textarea" name="descricao" placeholder="{{experiencia.descricao}}" />
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <input type="textarea" name="descricao" placeholder="Insira suas atividades principais aqui.">
+        {% endif %}
     </div>
     <div class="btn-block">
         <button type="submit" href="/">Confirmar</button>
