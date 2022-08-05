@@ -1,0 +1,47 @@
+{% load static %}
+{% if not experiencias %}
+<form method="post" action="{% url 'experiencia' %}">
+{% else %}
+{% for experiencia in experiencias %}
+<form method="post" action="{% url 'atualiza_experiencia' %}">
+{% endfor %}
+{% endif %}
+    {% csrf_token %}
+    <div class="banner">
+        <h1>Ultima Experiencia</h1> 
+    </div>
+    <h2>Atualize sua ultima experiencia</h2>
+    <div class="textarea">
+        <p>Empresa</p>
+        {% if experiencias %}
+        {% for experiencia in experiencias %}
+        <input type="textarea" name="empresa_anterior" placeholder="{{experiencia.empresa_anterior}}" /> 
+        {% endfor %}
+        {% else %}
+        <input type="textarea" name="empresa_anterior" placeholder="Insira o nome da sua empresa aqui." />
+        {% endif %}
+    </div>
+    <div class="item">
+        <p>Emprego Atual?</p>
+        <select name="emprego_atual" id="emp">
+            <option value="True">Sim</option>
+            <option value="False">Não</option>
+        </select>
+    </div>
+    <div class="date">
+        <p>Data Inicio</p>
+        <input type="date" name="data_inicio" />
+    </div>
+    <div class="date">
+        <p>Data Fim</p>
+        <input type="date" name="data_fim" />
+    </div>
+    <div class="textarea">
+        <p>Descrição das Atividades</p>
+        <input type="textarea" name="descricao" placeholder="{{experiencia.descricao}}" />
+    </div>
+    <div class="btn-block">
+        <button type="submit" href="/">Confirmar</button>
+    </div>
+    </div>
+</form>

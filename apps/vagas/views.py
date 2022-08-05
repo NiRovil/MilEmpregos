@@ -7,6 +7,7 @@ def index(request):
     return render(request, 'vagas/index.html')
 
 def vagas(request):
+    
     """Criação de vagas para candidatos."""
 
     if request.method == 'POST':

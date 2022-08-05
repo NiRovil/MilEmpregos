@@ -1,0 +1,46 @@
+{% load static %}
+{% if not candidatos %}
+<form method="post" action="{% url 'perfil_candidato' %}">
+{% else %}
+{% for candidato in candidatos %}
+<form method="post" action="{% url 'atualiza_candidato' %}">
+{% endfor %}
+{% endif %}
+    {% csrf_token %}
+    <div class="banner">
+        <h1>Seu perfil</h1>
+    </div>
+        <h2>Atualize seu perfil</h2>
+            <div class="item">
+                <p>Nome Completo</p>
+                {% if candidatos %}
+                {% for candidato in candidatos %}
+                <input type="textarea" name="nome_candidato" placeholder="{{candidato.nome_candidato}}" /> 
+                {% endfor %}
+                {% else %}
+                <input type="textarea" name="nome_candidato" placeholder="Insira seu nome aqui" />
+                {% endif %}   
+            </div> 
+            <p>Pretensão Salárial</p>
+            <select name="faixa" id="faixa_salarial">
+                <option value="1K">Até 1.000</option>
+                <option value="2K">De 1.000 à 2.000</option>
+                <option value="3K">De 2.000 à 3.000</option>
+                <option value="4K">Acima de 3.000</option>
+            </select>
+            <div class="item">
+                <p>Escolaridade</p>
+                <select name="escolaridade" id="escolaridade_minima">
+                    <option value="EF">Ensino Fundamental</option>
+                    <option value="EM">Ensino Médio</option>
+                    <option value="TC">Tecnólogo</option>
+                    <option value="ES">Ensino Superior</option>
+                    <option value="PG">Pós / MBA / Mestrado</option>
+                    <option value="DT">Doutorado</option>
+                </select>
+            </div>
+        <div class="btn-block">                       
+            <button type="submit" href="/">Confirmar</button>
+        </div>
+    </div>
+</form>

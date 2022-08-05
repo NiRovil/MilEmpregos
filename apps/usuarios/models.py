@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -37,9 +38,12 @@ class Candidato(models.Model):
 
 class Experiencia(models.Model):
 
-    empresa = models.CharField(max_length=100, blank=False)
-    data_inicio = models.DateField(blank=False)
+    usuario_experiencia = models.ForeignKey(User, on_delete=models.CASCADE)
+    empresa_anterior = models.CharField(max_length=100)
     emprego_atual = models.BooleanField(default=False)
-    if emprego_atual:
-        data_fim = models.DateField(blank=False)
+    data_inicio = models.DateField()
+    data_fim = models.DateField(default='9999-12-31')
     descricao = models.TextField()
+
+    def __str__(self):
+        return self.empresa_anterior

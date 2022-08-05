@@ -13,28 +13,11 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <title>Perfil</title>
+    <title>Dashboard</title>
 </head>
 
 <body>
     {% include 'dash/navegacao.html' %}
-    <div id="throbber" style="display:none; min-height:120px;"></div>
-    <div id="noty-holder"></div>
-    <div id="wrapper"> 
-    <div class="container-fluid">
-        <div class="row text-center">
-            <div class="col-md-12 dashhead">
-                <body>
-                    <div class="testbox">
-                        {% if user.is_staff %}
-                        {% include 'perfil/empresa.html' %}
-                        {% else %}
-                        {% include 'perfil/candidato.html' %}
-                        {% endif %}      
-                    </div>
-                </body>
-            </div>
-        </div>
-    </div>
+    {% include 'dash/dashboard.html' %}
 </body>
 </html>

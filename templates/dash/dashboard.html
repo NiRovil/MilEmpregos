@@ -1,0 +1,29 @@
+{% load static %}
+
+<div id="throbber" style="display:none; min-height:120px;"></div>
+<div id="noty-holder"></div>
+<div id="wrapper"> 
+    <div class="container-fluid">
+        <div class="row text-center">
+            <div class="col-md-12 dashhead">
+                <body>
+                    <div class="testbox">
+                        <form action="/">
+                            <div class="banner">
+                                {% if user.is_staff %}
+                                    {% if empresa.nome_empresa == None %}
+                                        <h1>Atualize o nome da sua empresa na aba 'perfil' para começar!</h1>
+                                    {% else %}
+                                        <h1>Bem vindo, {{empresa.nome_empresa}}!</h1>
+                                    {% endif %}
+                                {% else %}
+                                    <h1>Bem vindo, {{user.first_name}} {{user.last_name}}!</h1>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </body>
+            </div>
+        </div>
+    </div>
+</div>

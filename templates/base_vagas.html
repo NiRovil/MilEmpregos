@@ -2,7 +2,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,11 +17,10 @@
 </head>
 
 <body>
+    {% include 'dash/navegacao.html' %}
     <div id="throbber" style="display:none; min-height:120px;"></div>
     <div id="noty-holder"></div>
-
     <div id="wrapper">
-        {% include 'usuarios/navegacao.html' %}
         <div class="container-fluid">
             <div class="row text-center">
                 <div class="col-md-12 dashhead">
