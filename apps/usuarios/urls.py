@@ -4,7 +4,6 @@ from usuarios import views
 urlpatterns = [
     path('cadastro/', views.cadastro, name='cadastro'),
     path('login/', views.login, name='login'),
-    path('dashboard/', views.dashboard, name='dashboard'),
     path('perfil-candidato/', views.perfil_candidato, name='perfil_candidato'),
     path('atualiza-perfil/', views.atualiza_candidato, name='atualiza_candidato'),
     path('experiencia/', views.experiencia, name='experiencia'),

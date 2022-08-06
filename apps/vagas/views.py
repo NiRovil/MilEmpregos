@@ -1,17 +1,46 @@
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from vagas.models import Vagas
-from usuarios.models import Empresa
+from usuarios.models import Empresa, Candidato
 
 def index(request):
     return render(request, 'vagas/index.html')
 
-def vagas(request):
+def dashboard(request):
+
+    empresas = Empresa.objects.all()
+    vagas = Vagas.objects.all()
+    faixas = {
+        '1K': 'Até 1.000',
+        '2K': 'De 1.000 à 2.000',
+        '3K': 'De 2.000 à 3.000',
+        '4K': 'Acima de 3.000'
+    }
+    escolaridades = {
+        'EF': 'Ensino Fundamental',
+        'EM': 'Ensino Médio',
+        'TC': 'Tecnólogo',
+        'ES': 'Ensino Superior',
+        'PG': 'Pós / MBA / Mestrado',
+        'DT': 'Doutorado'
+    }
+    candidatos = Candidato.objects.all()
+    contexto = {
+        'candidatos':candidatos, 
+        'empresas':empresas, 
+        'vagas':vagas, 
+        'faixas':faixas, 
+        'escolaridades':escolaridades
+    }
+
+    return render(request, 'base_dash.html', contexto)
+
+def cria_vagas(request):
     
     """Criação de vagas para candidatos."""
 
     if request.method == 'POST':
-        empresa = get_object_or_404(Empresa, pk=request.user.id)
+        empresa = request.user.id
         nome_vaga = request.POST['nome_vaga']
         faixa = request.POST['faixa']
         escolaridade = request.POST['escolaridade']
@@ -21,11 +50,38 @@ def vagas(request):
             return redirect('vagas')
 
         vaga = Vagas.objects.create(
+            empresa_id = empresa,
             nome_vaga = nome_vaga,
             faixa_salarial = faixa,
             escolaridade = escolaridade
         )
 
-        return render(request, 'dashboard.html')
+        vaga.save()
+
+        return redirect('dashboard')
 
     return render(request, 'base_vagas.html')
+
+def editar_vagas(request, vaga_id):
+
+    """Retorna a vaga selecionada pelo usuário."""
+
+    vaga = get_object_or_404(Vagas, pk=vaga_id)
+    contexto = {'vaga':vaga}
+
+    return render(request, 'vagas/atualizar_vaga.html', contexto)
+
+def atualizar_vaga(request):
+    
+    """Atualiza a vaga selecionada."""
+
+    if request.method == 'POST':
+        vaga_id = request.POST['vaga_id']
+        v = Vagas.objects.get(pk=vaga_id)
+        v.nome_vaga = request.POST['nome_vaga']
+        v.faixa = request.POST['faixa']
+        v.escolaridade = request.POST['escolaridade']
+
+        v.save()
+
+        return redirect('dashboard')

@@ -72,14 +72,6 @@ def login(request):
     
     return render(request, 'registro/login.html')
 
-def dashboard(request):
-
-    empresas = Empresa.objects.all()
-    candidatos = Candidato.objects.all()
-    contexto = {'candidatos':candidatos, 'empresas':empresas}
-
-    return render(request, 'base_dash.html', contexto)
-
 def perfil_candidato(request):
 
     if request.method == 'POST':
