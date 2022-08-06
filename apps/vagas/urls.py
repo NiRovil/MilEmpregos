@@ -6,5 +6,6 @@ urlpatterns = [
     path('vagas/', views.cria_vagas, name='vagas'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('atualizar-vaga/<int:vaga_id>', views.editar_vagas, name='editar_vagas'),
+    path('deletar-vaga/<int:vaga_id>', views.deletar_vagas, name='deletar_vagas'),
     path('atualizar', views.atualizar_vaga, name='atualizar_vaga')
 ]

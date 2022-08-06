@@ -71,6 +71,15 @@ def editar_vagas(request, vaga_id):
 
     return render(request, 'vagas/atualizar_vaga.html', contexto)
 
+def deletar_vagas(request, vaga_id):
+
+    """Retorna a vaga selecionada pelo usuário."""
+
+    vaga = get_object_or_404(Vagas, pk=vaga_id)
+    vaga.delete()
+    messages.success(request, 'Vaga deletada com sucesso!')
+    return redirect('dashboard')
+
 def atualizar_vaga(request):
     
     """Atualiza a vaga selecionada."""
@@ -84,4 +93,5 @@ def atualizar_vaga(request):
 
         v.save()
 
+        messages.success(request, 'Vaga atualizada com sucesso!')
         return redirect('dashboard')

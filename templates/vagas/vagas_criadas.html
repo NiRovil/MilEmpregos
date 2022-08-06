@@ -17,7 +17,7 @@
                                 {% endif %}
                             {% endfor %}
                             <a href="{% url 'editar_vagas' vaga.id %}" type="button" class="btn btn-outline-dark">Atualizar</a>
-                            <a href="#" type="button" class="btn btn-outline-danger">Deletar</a>
+                            <a href="{% url 'deletar_vagas' vaga.id %}" type="button" class="btn btn-outline-danger">Deletar</a>
                         {% endfor %}
                     {% else %}
                     <h1>Nenhuma vaga criada!</h1>
