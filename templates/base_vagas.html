@@ -15,24 +15,10 @@
 
 <body>
     {% include 'dash/navegacao.html' %}
-    <div id="throbber" style="display:none; min-height:120px;"></div>
-    <div id="noty-holder"></div>
-    <div id="wrapper">
-        <div class="container-fluid">
-            <div class="row text-center">
-                <div class="col-md-12 dashhead">
-                    <body>
-                        <div class="testbox">
-                            {% if user.is_staff %}
-                            {% include 'vagas/criar_vagas.html' %}
-                            {% else %}
-                            {% include 'vagas/vagas_disponiveis.html'}
-                            {% endif %}
-                        </div>
-                    </body>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% if user.is_staff %}
+        {% include 'vagas/criar_vagas.html' %}
+    {% else %}
+        {% include 'vagas/vagas_disponiveis.html' %}
+    {% endif %}
 </body>
 </html>

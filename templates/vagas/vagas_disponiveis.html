@@ -1,0 +1,35 @@
+<body>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-4">
+                    {% if vagas %}
+                        {% for vaga in vagas %}
+                            <a href="{% url 'informacoes_vaga' vaga.id %}">
+                                <h2>{{vaga}}</h2>
+                            </a>
+                            {% for chave, valor in faixas.items %}
+                                {% if chave == vaga.faixa_salarial %}
+                                    <h5>Faixa Salarial: {{valor}}</h5>
+                                {% endif %}
+                            {% endfor %}
+                            {% for chave, valor in escolaridades.items %}
+                                {% if chave == vaga.escolaridade %}
+                                    <h5>Escolaridade Minima: {{valor}}</h5>
+                                {% endif %}
+                            {% endfor %}
+                            {% for candidato in candidatos %}
+                                <a href="{% url 'candidatura' vaga.id candidato.id %}" type="button" class="btn btn-outline-dark">Candidatar-se</a>
+                            {% endfor %}
+                        {% endfor %}
+                    {% elif empresas %}
+                    <h1>Nenhuma vaga criada!</h1>
+                    <a href="{% url 'vagas' %}">
+                        <h5>Clique aqui para criar sua primeira vaga!</h5>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+</body>

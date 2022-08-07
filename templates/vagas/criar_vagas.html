@@ -1,39 +1,52 @@
 {% load static %}
-
-<form method="post" action="{% url 'vagas' %}">
-    <div class="banner">
-        <h1>Crie sua vaga já!</h1>
-    </div>
-    <h2>Detalhes da vaga</h2>
-    <div class="item">
-        <p>Nome da Vaga</p>
-        <div class="item">
-            <input type="text" name="nome_vaga" placeholder="Insira o nome da vaga aqui." />
+<div id="throbber" style="display:none; min-height:120px;"></div>
+<div id="noty-holder"></div>
+<div id="wrapper">
+    <div class="container-fluid">
+        <div class="row text-center">
+            <div class="col-md-12 dashhead">
+                <body>
+                    <div class="testbox">
+                        <form method="post" action="{% url 'vagas' %}">
+                            <div class="banner">
+                                <h1>Crie sua vaga já!</h1>
+                            </div>
+                            <h2>Detalhes da vaga</h2>
+                            <div class="item">
+                                <p>Nome da Vaga</p>
+                                <div class="item">
+                                    <input type="text" name="nome_vaga" placeholder="Insira o nome da vaga aqui." />
+                                </div>
+                            </div>
+                            <div class="item">
+                                <p>Faixa Salarial</p>
+                                <select name="faixa" id="faixa_salarial">
+                                    <option value="1K">Até 1.000</option>
+                                    <option value="2K">De 1.000 à 2.000</option>
+                                    <option value="3K">De 2.000 à 3.000</option>
+                                    <option value="4K">Acima de 3.000</option>
+                                </select>
+                            </div>
+                            <h2>Requisitos</h2>
+                            <div class="item">
+                                <p>Escolaridade Minima</p>
+                                <select name="escolaridade" id="escolaridade_minima">
+                                    <option value="EF">Ensino Fundamental</option>
+                                    <option value="EM">Ensino Médio</option>
+                                    <option value="TC">Tecnólogo</option>
+                                    <option value="ES">Ensino Superior</option>
+                                    <option value="PG">Pós / MBA / Mestrado</option>
+                                    <option value="DT">Doutorado</option>
+                                </select>
+                            </div>
+                            <div class="btn-block">
+                                {% csrf_token %}
+                                <button type="submit">Confirmar</button>
+                            </div>
+                        </form>
+                    </div>
+                </body>
+            </div>
         </div>
     </div>
-    <div class="item">
-        <p>Faixa Salarial</p>
-        <select name="faixa" id="faixa_salarial">
-            <option value="1K">Até 1.000</option>
-            <option value="2K">De 1.000 à 2.000</option>
-            <option value="3K">De 2.000 à 3.000</option>
-            <option value="4K">Acima de 3.000</option>
-        </select>
-    </div>
-    <h2>Requisitos</h2>
-    <div class="item">
-        <p>Escolaridade Minima</p>
-        <select name="escolaridade" id="escolaridade_minima">
-            <option value="EF">Ensino Fundamental</option>
-            <option value="EM">Ensino Médio</option>
-            <option value="TC">Tecnólogo</option>
-            <option value="ES">Ensino Superior</option>
-            <option value="PG">Pós / MBA / Mestrado</option>
-            <option value="DT">Doutorado</option>
-        </select>
-    </div>
-    <div class="btn-block">
-        {% csrf_token %}
-        <button type="submit">Confirmar</button>
-    </div>
-</form>
+</div>

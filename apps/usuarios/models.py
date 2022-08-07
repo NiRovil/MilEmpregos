@@ -32,6 +32,7 @@ class Candidato(models.Model):
     nome_candidato = models.CharField(max_length=30)
     pretensao_salarial = models.CharField(choices=SALARIOS, max_length=2, blank=False, default='1K')
     escolaridade = models.CharField(choices=ESCOLARIDADES, max_length=2, blank=False, default='EF')
+    candidatura = models.IntegerField(default=1)
 
     def __str__(self):
         return self.nome_candidato
