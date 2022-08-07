@@ -11,13 +11,13 @@
                         <form action="/">
                             <div class="banner">
                                 {% if user.is_staff %}
-                                    {% for empresa in empresas %}
-                                        {% if user.id == empresa.usuario_empresa_id %}
+                                    {% if empresas %}
+                                        {% for empresa in empresas %}
                                             <h1>Bem vindo, {{empresa}}! Abaixo as vagas criadas.</h1>
-                                        {% else %}
-                                            <h1>Bem vindo, para começar, atualize suas informações na aba perfil.</h1>
-                                        {% endif %}
-                                    {% endfor %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <h1>Bem vindo, para começar, atualize suas informações na aba perfil.</h1>
+                                    {% endif %}
                                 {% else %}
                                     {% for candidato in candidatos %}
                                         {% if user.id == candidato.usuario_candidato_id %}

@@ -1,7 +1,7 @@
-{% if not empresas %}
-<form method="post" action="{% url 'perfil_empresa' %}">
-{% else %}
+{% if empresas %}
 <form method="post" action="{% url 'atualiza_empresa' %}">
+{% else %}
+<form method="post" action="{% url 'perfil_empresa' %}">
 {% endif %}
     {% csrf_token %}
     <div class="banner">
@@ -10,13 +10,15 @@
         <h2>Atualize seu perfil</h2>
             <div class="item">
                 <p>Nome da empresa</p>
-                {% for empresa in empresas %}
-                    {% if user.id == empresa.usuario_empresa_id %}
-                        <input type="text" name="nome_empresa" placeholder="{{empresa}}" />
-                    {% else %}
-                        <input type="text" name="nome_empresa" placeholder="Insira o nome da empresa aqui." />
-                    {% endif %}
-                {% endfor %}
+                {% if empresas %}
+                    {% for empresa in empresas %}
+                        {% if user.id == empresa.usuario_empresa_id %}
+                            <input type="text" name="nome_empresa" placeholder="{{empresa}}" />
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <input type="text" name="nome_empresa" placeholder="Insira o nome da empresa aqui." />
+                {% endif %}
             <div class="btn-block">                                   
                 <button type="submit" href="/">Confirmar</button>
             </div>

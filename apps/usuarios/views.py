@@ -183,9 +183,9 @@ def perfil_empresa(request):
 
         return redirect('dashboard')
     
-    empresas = Empresa.objects.all()
-    contexto = {'empresas':empresas}
 
+    empresas = Empresa.objects.filter(usuario_empresa_id=request.user.id)
+    contexto = {'empresas':empresas}
     return render(request, 'base_perfil.html', contexto)
 
 def atualiza_empresa(request):
@@ -198,8 +198,3 @@ def atualiza_empresa(request):
         c.save()
 
         return redirect('dashboard')
-    
-    empresas = Empresa.objects.all()
-    contexto = {'empresas':empresas}
-
-    return render(request, 'base_perfil.html', contexto)

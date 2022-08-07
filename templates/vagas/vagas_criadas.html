@@ -19,7 +19,7 @@
                             <a href="{% url 'editar_vagas' vaga.id %}" type="button" class="btn btn-outline-dark">Atualizar</a>
                             <a href="{% url 'deletar_vagas' vaga.id %}" type="button" class="btn btn-outline-danger">Deletar</a>
                         {% endfor %}
-                    {% else %}
+                    {% elif empresas %}
                     <h1>Nenhuma vaga criada!</h1>
                     <a href="{% url 'vagas' %}">
                         <h5>Clique aqui para criar sua primeira vaga!</h5>

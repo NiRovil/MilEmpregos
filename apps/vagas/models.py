@@ -1,5 +1,5 @@
 from django.db import models
-from usuarios.models import Empresa
+from django.contrib.auth.models import User
 
 class Vagas(models.Model):
     
@@ -19,7 +19,7 @@ class Vagas(models.Model):
         ('DT', 'Doutorado')
     )
     
-    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     nome_vaga = models.CharField(max_length=50, blank=False)
     faixa_salarial = models.CharField(choices=SALARIOS,max_length=2 , blank=False, default='1K')
     escolaridade = models.CharField(choices=ESCOLARIDADES,max_length=2 , blank=False, default='EF')

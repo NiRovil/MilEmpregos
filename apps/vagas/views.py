@@ -8,8 +8,10 @@ def index(request):
 
 def dashboard(request):
 
-    empresas = Empresa.objects.all()
-    vagas = Vagas.objects.all()
+    usuario = request.user.id
+
+    empresas = Empresa.objects.filter(usuario_empresa_id=usuario)
+    vagas = Vagas.objects.filter(empresa_id=usuario)
     faixas = {
         '1K': 'Até 1.000',
         '2K': 'De 1.000 à 2.000',
