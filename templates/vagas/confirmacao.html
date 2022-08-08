@@ -20,11 +20,19 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-6 col-lg-4">
-                        <input type="text" id="vaga_id" class="form-control" name="vaga_id" value="{{vaga.id}}" hidden>
-                        <input type="text" id="candidato_id" class="form-control" name="candidato_id" value="{{condidato.id}}" hidden>
-                        <h3>Confirma a candidatura?</h3>
-                        <a href="{% url 'confirmacao' %}" type="button" class="btn btn-outline-dark">Sim</a>
-                        <a href="{% url 'vagas_disponiveis' %}" type="button" class="btn btn-outline-dark">Não</a>
+                        <form method="post" action="{% url 'confirmacao' %}">
+                            {% csrf_token %}
+                            <input type="text" id="vaga_id" class="form-control" name="vaga_id" value="{{vaga.id}}" hidden>
+                            <input type="text" id="candidato_id" class="form-control" name="candidato_id" value="{{candidato.id}}" hidden>
+                            {% if candidaturas %}
+                                <h3>Candidatura já foi efetuada para esta vaga!</h3>
+                                <a href="{% url 'vagas_disponiveis' %}" type="button" class="btn btn-outline-dark">Retornar</a>
+                            {% else %}
+                                <h3>Confirma a candidatura?</h3>
+                                <button class="btn btn-outline-dark" type="submit">Sim</button>
+                                <a href="{% url 'vagas_disponiveis' %}" type="button" class="btn btn-outline-dark">Não</a>    
+                            {% endif %}
+                        </form>
                     </div>
                 </div>
             </div>

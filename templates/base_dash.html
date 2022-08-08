@@ -17,6 +17,8 @@
     {% include 'dash/dashboard.html' %}
     {% if user.is_staff %}
         {% include 'vagas/vagas_criadas.html' %}
+    {% else %}
+        {% include 'vagas/vagas_candidatado.html' %}
     {% endif %}
 </body>
 </html>

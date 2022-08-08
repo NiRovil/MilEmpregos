@@ -2,32 +2,32 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-6 col-lg-4">
-            {% if user.is_staff %}
                 {% if vagas %}
                     {% for vaga in vagas %}
-                        <a href="{% url 'informacoes_vaga' vaga.id %}">
-                            <h2>{{vaga}}</h2>
-                        </a>
-                        {% for chave, valor in faixas.items %}
-                            {% if chave == vaga.faixa_salarial %}
-                                <h5>Faixa Salarial: {{valor}}</h5>
-                            {% endif %}
-                        {% endfor %}
-                        {% for chave, valor in escolaridades.items %}
-                            {% if chave == vaga.escolaridade %}
-                                <h5>Escolaridade Minima: {{valor}}</h5>
-                            {% endif %}
-                        {% endfor %}
-                        <a href="{% url 'editar_vagas' vaga.id %}" type="button" class="btn btn-outline-dark">Atualizar</a>
-                        <a href="{% url 'deletar_vagas' vaga.id %}" type="button" class="btn btn-outline-danger">Deletar</a>
+                        {% if vaga.empresa_id == user.id %}
+                            <a href="{% url 'informacoes_vaga' vaga.id %}">
+                                <h2>{{vaga}}</h2>
+                            </a>
+                            {% for chave, valor in faixas.items %}
+                                {% if chave == vaga.faixa_salarial %}
+                                    <h5>Faixa Salarial: {{valor}}</h5>
+                                {% endif %}
+                            {% endfor %}
+                            {% for chave, valor in escolaridades.items %}
+                                {% if chave == vaga.escolaridade %}
+                                    <h5>Escolaridade Minima: {{valor}}</h5>
+                                {% endif %}
+                            {% endfor %}
+                            <a href="{% url 'editar_vagas' vaga.id %}" type="button" class="btn btn-outline-dark">Atualizar</a>
+                            <a href="{% url 'deletar_vagas' vaga.id %}" type="button" class="btn btn-outline-danger">Deletar</a>
+                        {% endif %}
                     {% endfor %}
                 {% elif empresas %}
-                <h1>Nenhuma vaga criada!</h1>
+                <h3>Nenhuma vaga criada!</h3>
                 <a href="{% url 'vagas' %}">
                     <h5>Clique aqui para criar sua primeira vaga!</h5>
                 </a>
                 {% endif %}
-            {% endif %}
             </div>
         </div>
     </div>

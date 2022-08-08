@@ -11,5 +11,6 @@ urlpatterns = [
     path('atualizar', views.atualizar_vaga, name='atualizar_vaga'),
     path('informacoes-vaga/<int:vaga_id>', views.informacoes_vaga, name='informacoes_vaga'),
     path('candidatura/<int:vaga_id>/<int:candidato_id>', views.candidatura, name='candidatura'),
-    path('confirmacao/', views.confirma_candidatura, name='confirmacao')
+    path('confirmacao/', views.confirma_candidatura, name='confirmacao'),
+    path('desistir-candidatura/<int:candidatura_id>', views.desistir_candidatura, name='desistir_candidatura'),
 ]

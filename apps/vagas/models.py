@@ -23,7 +23,11 @@ class Vagas(models.Model):
     nome_vaga = models.CharField(max_length=50, blank=False)
     faixa_salarial = models.CharField(choices=SALARIOS,max_length=2 , blank=False, default='1K')
     escolaridade = models.CharField(choices=ESCOLARIDADES,max_length=2 , blank=False, default='EF')
-    candidatura = models.IntegerField(default=1)
 
     def __str__(self):
         return self.nome_vaga
+
+class Candidaturas(models.Model):
+
+    vaga = models.ForeignKey(Vagas, on_delete=models.CASCADE)
+    candidato = models.IntegerField()

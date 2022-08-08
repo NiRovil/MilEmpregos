@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
-from vagas.models import Vagas
+from vagas.models import Vagas, Candidaturas
 from usuarios.models import Empresa, Candidato
 
 def index(request):
@@ -10,8 +10,11 @@ def dashboard(request):
 
     usuario = request.user.id
 
+    candidatos = Candidato.objects.all()
     empresas = Empresa.objects.filter(usuario_empresa_id=usuario)
-    vagas = Vagas.objects.filter(empresa_id=usuario)
+    vagas = Vagas.objects.all()
+    candidaturas = Candidaturas.objects.filter(candidato=usuario)
+
     FAIXAS = {
         '1K': 'Até 1.000',
         '2K': 'De 1.000 à 2.000',
@@ -26,11 +29,11 @@ def dashboard(request):
         'PG': 'Pós / MBA / Mestrado',
         'DT': 'Doutorado'
     }
-    candidatos = Candidato.objects.all()
     contexto = {
         'candidatos':candidatos, 
         'empresas':empresas, 
-        'vagas':vagas, 
+        'vagas':vagas,
+        'candidaturas':candidaturas,
         'faixas':FAIXAS, 
         'escolaridades':ESCOLARIDADES
     }
@@ -91,7 +94,7 @@ def atualizar_vaga(request):
 
 def deletar_vagas(request, vaga_id):
 
-    """Retorna a vaga selecionada pelo usuário."""
+    """Deleta a vaga selecionada pelo usuário."""
 
     vaga = get_object_or_404(Vagas, pk=vaga_id)
     vaga.delete()
@@ -109,6 +112,8 @@ def informacoes_vaga(request, vaga_id):
     return render(request, 'vagas/informacoes_vaga.html', contexto)
 
 def vagas_disponiveis(request):
+
+    """Retorna as vagas disponíveis para aplicação."""
 
     if request.method == 'GET':
 
@@ -146,7 +151,9 @@ def candidatura(request, vaga_id, candidato_id):
 
     vaga = get_object_or_404(Vagas, pk=vaga_id)
     candidato = get_object_or_404(Candidato, pk=candidato_id)
-    contexto = {'vaga':vaga, 'candidato':candidato}
+    # Filtra as candidaturas já efetuadas.
+    candidaturas = Candidaturas.objects.filter(vaga_id=vaga.id, candidato=candidato.id)
+    contexto = {'vaga':vaga, 'candidato':candidato, 'candidaturas':candidaturas}
 
     return render(request, 'vagas/confirmacao.html', contexto)
 
@@ -157,8 +164,20 @@ def confirma_candidatura(request):
     if request.method == 'POST':
         vaga_id = request.POST['vaga_id']
         candidato_id = request.POST['candidato_id']
-        v = Vagas.objects.get(pk=vaga_id)
-        c = Candidato.objects.get(pk=candidato_id)
-        v.candidatura = request.POST['vaga_candidatura']
+        candidatura = Candidaturas.objects.create(
+            vaga_id = vaga_id,
+            candidato = candidato_id
+        )
+
+        candidatura.save()
 
         return redirect('dashboard')
+
+def desistir_candidatura(request, candidatura_id):
+
+    """Desiste de uma candidatura selecionada pelo usuário."""
+
+    candidatura = get_object_or_404(Candidaturas, pk=candidatura_id)
+    candidatura.delete()
+    messages.success(request, 'Candidatura desfeita com sucesso!')
+    return redirect('dashboard')
