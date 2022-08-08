@@ -13,11 +13,11 @@
                 {% if empresas %}
                     {% for empresa in empresas %}
                         {% if user.id == empresa.usuario_empresa_id %}
-                            <input type="text" name="nome_empresa" placeholder="{{empresa}}" />
+                            <input type="text" name="nome_empresa" required="required" placeholder="{{empresa}}" />
                         {% endif %}
                     {% endfor %}
                 {% else %}
-                    <input type="text" name="nome_empresa" placeholder="Insira o nome da empresa aqui." />
+                    <input type="text" name="nome_empresa" required="required" placeholder="Insira o nome da empresa aqui." />
                 {% endif %}
             <div class="btn-block">                                   
                 <button type="submit" href="/">Confirmar</button>

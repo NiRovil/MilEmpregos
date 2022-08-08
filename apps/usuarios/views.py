@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from usuarios.validation import *
 from usuarios.models import Empresa, Candidato, Experiencia
 from django.contrib import messages
@@ -91,7 +91,7 @@ def perfil_candidato(request):
 
         return redirect('experiencia')
 
-    candidatos = Candidato.objects.all()
+    candidatos = Candidato.objects.filter(usuario_candidato_id=request.user.id)
     contexto = {'candidatos':candidatos}
 
     return render(request, 'base_perfil.html', contexto)
@@ -109,7 +109,8 @@ def atualiza_candidato(request):
 
         return redirect('atualiza_experiencia')
 
-    candidatos = Candidato.objects.all()
+    usuario = request.user.id
+    candidatos = Candidato.objects.filter(usuario_candidato_id = usuario)
     contexto = {'candidatos':candidatos}
 
     return render(request, 'base_perfil.html', contexto)
@@ -140,7 +141,7 @@ def experiencia(request):
 
         return redirect('dashboard')
 
-    experiencias = Experiencia.objects.all()
+    experiencias = Experiencia.objects.filter(usuario_experiencia_id = request.user.id)
     contexto = {'experiencias':experiencias}
     
     return render(request, 'base_experiencia.html', contexto)

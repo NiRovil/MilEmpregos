@@ -1,10 +1,8 @@
 {% load static %}
-{% if not candidatos %}
-<form method="post" action="{% url 'perfil_candidato' %}">
+{% if candidatos %}
+    <form method="post" action="{% url 'atualiza_candidato' %}">
 {% else %}
-{% for candidato in candidatos %}
-<form method="post" action="{% url 'atualiza_candidato' %}">
-{% endfor %}
+    <form method="post" action="{% url 'perfil_candidato' %}">
 {% endif %}
     {% csrf_token %}
     <div class="banner">
@@ -12,14 +10,16 @@
     </div>
         <h2>Atualize seu perfil</h2>
             <div class="item">
-                <p>Nome Completo</p>
-                {% for candidato in candidatos %}
-                    {% if user.id == candidato.usuario_candidato_id %}
-                        <input type="textarea" name="nome_candidato" placeholder="{{candidato}}" /> 
-                    {% else %}                
-                        <input type="textarea" name="nome_candidato" placeholder="Insira seu nome aqui!" />
-                    {% endif %}
-                {% endfor %}
+                <p>Nome Completo</p>    
+                {% if candidatos %}
+                    {% for candidato in candidatos %}
+                        {% if user.id == candidato.usuario_candidato_id %}
+                            <input type="textarea" name="nome_candidato" required="required" placeholder="{{candidato}}" />
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <input type="textarea" name="nome_candidato" required="requires" placeholder="Insira seu nome aqui!">
+                {% endif %}
             </div> 
             <p>Pretensão Salárial</p>
             <select name="faixa" id="faixa_salarial">

@@ -28,7 +28,6 @@
                                     <h1>Saiba tudo sobre a vaga!</h1>
                                 </div>
                                 <h2>Candidatos</h2>
-                                <h5>Candidatos totais: </h5>
                                 <div class="container">
                                     <div class="container">
                                         <table class="table table-bordered">
@@ -43,10 +42,22 @@
                                             <tbody>
                                                 <tr>
                                                     {% for candidato in candidatos %}
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                        {% for candidatura in candidaturas %}
+                                                            {% if candidatura.candidato == candidato.id %}
+                                                                <td>{{candidato}}</td>
+                                                                {% for chave, valor in faixas.items %}
+                                                                    {% if chave == candidato.pretensao_salarial %}
+                                                                        <td>{{valor}}</td>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                {% for chave, valor in escolaridades.items %}
+                                                                    {% if chave == candidato.escolaridade %}
+                                                                        <td>{{valor}}</td>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                <td>pontos</td>
+                                                            {% endif %}
+                                                        {% endfor %}
                                                     {% endfor %}
                                                 </tr>
                                             </tbody>

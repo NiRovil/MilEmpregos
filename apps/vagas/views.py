@@ -6,14 +6,16 @@ from usuarios.models import Empresa, Candidato
 def index(request):
     return render(request, 'vagas/index.html')
 
-def dashboard(request):
+def dashboard(request): 
 
-    usuario = request.user.id
-
-    candidatos = Candidato.objects.all()
-    empresas = Empresa.objects.filter(usuario_empresa_id=usuario)
+    candidatos = Candidato.objects.filter(usuario_candidato_id=request.user.id)
+    empresas = Empresa.objects.filter(usuario_empresa_id=request.user.id)
     vagas = Vagas.objects.all()
-    candidaturas = Candidaturas.objects.filter(candidato=usuario)
+    candidaturas = Candidaturas.objects.all()
+    for candidatura in candidaturas:
+        candidatura = candidatura.candidato
+    candidaturas_filtro = Candidaturas.objects.filter(candidato=candidatura)
+    print(candidaturas_filtro)
 
     FAIXAS = {
         '1K': 'Até 1.000',
@@ -33,7 +35,7 @@ def dashboard(request):
         'candidatos':candidatos, 
         'empresas':empresas, 
         'vagas':vagas,
-        'candidaturas':candidaturas,
+        'candidaturas':candidaturas_filtro,
         'faixas':FAIXAS, 
         'escolaridades':ESCOLARIDADES
     }
@@ -105,9 +107,43 @@ def informacoes_vaga(request, vaga_id):
 
     """Retorna as informações da vaga selecionada."""
 
-    vaga = get_object_or_404(Vagas, pk=vaga_id)
+    FAIXAS = {
+        '1K': 'Até 1.000',
+        '2K': 'De 1.000 à 2.000',
+        '3K': 'De 2.000 à 3.000',
+        '4K': 'Acima de 3.000'
+    }
+    ESCOLARIDADES = {
+        'EF': 'Ensino Fundamental',
+        'EM': 'Ensino Médio',
+        'TC': 'Tecnólogo',
+        'ES': 'Ensino Superior',
+        'PG': 'Pós / MBA / Mestrado',
+        'DT': 'Doutorado'
+    }
+
+    vagass = Vagas.objects.filter(id=vaga_id)
+    vagas = get_object_or_404(Vagas, pk=vaga_id)
+    candidaturas = Candidaturas.objects.filter(vaga_id=vaga_id)
     candidatos = Candidato.objects.all()
-    contexto = {'vaga':vaga, 'candidatos':candidatos}
+
+    for vaga in vagass:
+        for candidato in candidatos:
+            pontos = 0
+            if vaga.faixa_salarial == candidato.pretensao_salarial:
+                pontos += 1
+            if vaga.escolaridade == candidato.escolaridade:
+                pontos += 1
+
+    print(pontos)
+
+    contexto = {
+        'vagas':vagas, 
+        'candidaturas':candidaturas, 
+        'candidatos':candidatos,
+        'faixas':FAIXAS,
+        'escolaridades':ESCOLARIDADES,
+    }
 
     return render(request, 'vagas/informacoes_vaga.html', contexto)
 
@@ -121,6 +157,7 @@ def vagas_disponiveis(request):
 
         vagas = Vagas.objects.all()
         candidatos = Candidato.objects.filter(usuario_candidato_id=usuario)
+        empresas = Empresa.objects.filter(usuario_empresa_id=usuario)
         FAIXAS = {
             '1K': 'Até 1.000',
             '2K': 'De 1.000 à 2.000',
@@ -141,6 +178,7 @@ def vagas_disponiveis(request):
             'faixas':FAIXAS,    
             'escolaridades':ESCOLARIDADES,
             'candidatos':candidatos,
+            'empresas':empresas,
         }
 
         return render(request, 'base_vagas.html', contexto)

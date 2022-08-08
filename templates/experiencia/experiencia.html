@@ -1,27 +1,26 @@
 {% load static %}
-{% if not experiencias %}
-<form method="post" action="{% url 'experiencia' %}">
+{% if experiencias %}
+    <form method="post" action="{% url 'atualiza_experiencia' %}">
 {% else %}
-{% for experiencia in experiencias %}
-<form method="post" action="{% url 'atualiza_experiencia' %}">
-{% endfor %}
+    <form method="post" action="{% url 'experiencia' %}">
 {% endif %}
     {% csrf_token %}
     <div class="banner">
         <h1>Ultima Experiencia</h1> 
     </div>
     <h2>Atualize sua ultima experiencia</h2>
+    <h5>Se não houver experiencia anterior, deixar em branco.</h5>
     <div class="textarea">
         <p>Empresa</p>
         {% if experiencias %}
             {% for experiencia in experiencias %}
                 {% if user.id == experiencia.usuario_experiencia_id %}
-                    <input type="textarea" name="empresa_anterior" placeholder="{{experiencia.empresa_anterior}}" /> 
+                    <input type="textarea" name="empresa_anterior" required="required" placeholder="{{experiencia.empresa_anterior}}" />
                 {% endif %}
             {% endfor %}
         {% else %}
-            <input type="textarea" name="empresa_anterior" placeholder="Insira o nome da empresa aqui." />
-        {% endif %}        
+            <input type="textarea" name="empresa_anterior" required="required" placeholder="Insira o nome da empresa aqui." />
+        {% endif %}
     </div>
     <div class="item">
         <p>Emprego Atual?</p>
@@ -43,11 +42,11 @@
         {% if experiencias %}
             {% for experiencia in experiencias %}
                 {% if user.id == experiencia.usuario_experiencia_id %}
-                    <input type="textarea" name="descricao" placeholder="{{experiencia.descricao}}" />
+                    <input type="textarea" name="descricao" required="required" placeholder="{{experiencia.descricao}}" />
                 {% endif %}
             {% endfor %}
         {% else %}
-            <input type="textarea" name="descricao" placeholder="Insira suas atividades principais aqui.">
+            <input type="textarea" name="descricao" required="required" placeholder="Insira suas atividades principais aqui.">
         {% endif %}
     </div>
     <div class="btn-block">

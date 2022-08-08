@@ -41,7 +41,9 @@
                             </div>
                             <div class="btn-block">
                                 {% csrf_token %}
+                                {% if empresas %}
                                 <button type="submit">Confirmar</button>
+                                {% endif %}
                             </div>
                         </form>
                     </div>
