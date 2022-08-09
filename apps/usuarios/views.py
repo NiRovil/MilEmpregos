@@ -63,7 +63,9 @@ def login(request):
             autenticacao = authenticate(request, username=usuario, password=senha)
             if autenticacao is not None:
                 login_auth(request, autenticacao)
-                return redirect('dashboard')
+                if request.user.is_staff:
+                    return redirect('dashboard_empresa')
+                return redirect('dashboard_candidato')
             messages.error(request, 'Senha incorreta!')
             return redirect('login')
 

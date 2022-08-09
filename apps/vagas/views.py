@@ -1,42 +1,58 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
+from vagas.constantes import SALARIOS, ESCOLARIDADES
 from vagas.models import Vagas, Candidaturas
 from usuarios.models import Empresa, Candidato
 
 def index(request):
     return render(request, 'vagas/index.html')
 
-def dashboard(request): 
+def dashboard_candidato(request): 
+    
+    usuario_id = 0
+    candidato = []
+    candidatos = Candidato.objects.all()
 
-    candidatos = Candidato.objects.filter(usuario_candidato_id=request.user.id)
-    empresas = Empresa.objects.filter(usuario_empresa_id=request.user.id)
+    for x in candidatos:
+        if x.usuario_candidato_id == request.user.id:
+            usuario_id = x.id
+            candidato = Candidato.objects.get(id=usuario_id)
+            break
+
+    candidaturas = Candidaturas.objects.filter(candidato=usuario_id)
     vagas = Vagas.objects.all()
-    candidaturas = Candidaturas.objects.all()
-    for candidatura in candidaturas:
-        candidatura = candidatura.candidato
-    candidaturas_filtro = Candidaturas.objects.filter(candidato=candidatura)
-    print(candidaturas_filtro)
 
-    FAIXAS = {
-        '1K': 'Até 1.000',
-        '2K': 'De 1.000 à 2.000',
-        '3K': 'De 2.000 à 3.000',
-        '4K': 'Acima de 3.000'
-    }
-    ESCOLARIDADES = {
-        'EF': 'Ensino Fundamental',
-        'EM': 'Ensino Médio',
-        'TC': 'Tecnólogo',
-        'ES': 'Ensino Superior',
-        'PG': 'Pós / MBA / Mestrado',
-        'DT': 'Doutorado'
-    }
     contexto = {
-        'candidatos':candidatos, 
-        'empresas':empresas, 
+        'candidatos':candidatos,
+        'candidato':candidato, 
         'vagas':vagas,
-        'candidaturas':candidaturas_filtro,
-        'faixas':FAIXAS, 
+        'candidaturas':candidaturas,
+        'faixas':SALARIOS, 
+        'escolaridades':ESCOLARIDADES
+    }
+
+    return render(request, 'base_dash.html', contexto)
+
+def dashboard_empresa(request):
+    
+    usuario_id = 0
+    empresa = []
+    empresas = Empresa.objects.all()
+
+    for x in empresas:
+        if x.usuario_empresa_id == request.user.id:
+            usuario_id = x.id
+            empresa = Empresa.objects.get(usuario_empresa_id=usuario_id)
+            break
+    
+    vagas = Vagas.objects.filter(empresa_id=usuario_id)
+    candidaturas = Candidaturas.objects.all()
+
+    contexto = {
+        'empresa':empresa, 
+        'vagas':vagas,
+        'candidaturas':candidaturas,
+        'faixas':SALARIOS, 
         'escolaridades':ESCOLARIDADES
     }
 
@@ -65,7 +81,7 @@ def cria_vagas(request):
 
         vaga.save()
 
-        return redirect('dashboard')
+        return redirect('dashboard_empresa')
 
     return render(request, 'base_vagas.html')
 
@@ -92,7 +108,7 @@ def atualizar_vaga(request):
         v.save()
 
         messages.success(request, 'Vaga atualizada com sucesso!')
-        return redirect('dashboard')
+        return redirect('dashboard_empresa')
 
 def deletar_vagas(request, vaga_id):
 
@@ -101,26 +117,11 @@ def deletar_vagas(request, vaga_id):
     vaga = get_object_or_404(Vagas, pk=vaga_id)
     vaga.delete()
     messages.success(request, 'Vaga deletada com sucesso!')
-    return redirect('dashboard')
+    return redirect('dashboard_empresa')
 
 def informacoes_vaga(request, vaga_id):
 
     """Retorna as informações da vaga selecionada."""
-
-    FAIXAS = {
-        '1K': 'Até 1.000',
-        '2K': 'De 1.000 à 2.000',
-        '3K': 'De 2.000 à 3.000',
-        '4K': 'Acima de 3.000'
-    }
-    ESCOLARIDADES = {
-        'EF': 'Ensino Fundamental',
-        'EM': 'Ensino Médio',
-        'TC': 'Tecnólogo',
-        'ES': 'Ensino Superior',
-        'PG': 'Pós / MBA / Mestrado',
-        'DT': 'Doutorado'
-    }
 
     vagass = Vagas.objects.filter(id=vaga_id)
     vagas = get_object_or_404(Vagas, pk=vaga_id)
@@ -141,7 +142,7 @@ def informacoes_vaga(request, vaga_id):
         'vagas':vagas, 
         'candidaturas':candidaturas, 
         'candidatos':candidatos,
-        'faixas':FAIXAS,
+        'faixas':SALARIOS,
         'escolaridades':ESCOLARIDADES,
     }
 
@@ -158,24 +159,10 @@ def vagas_disponiveis(request):
         vagas = Vagas.objects.all()
         candidatos = Candidato.objects.filter(usuario_candidato_id=usuario)
         empresas = Empresa.objects.filter(usuario_empresa_id=usuario)
-        FAIXAS = {
-            '1K': 'Até 1.000',
-            '2K': 'De 1.000 à 2.000',
-            '3K': 'De 2.000 à 3.000',
-            '4K': 'Acima de 3.000'
-        }
-        ESCOLARIDADES = {
-            'EF': 'Ensino Fundamental',
-            'EM': 'Ensino Médio',
-            'TC': 'Tecnólogo',
-            'ES': 'Ensino Superior',
-            'PG': 'Pós / MBA / Mestrado',
-            'DT': 'Doutorado'
-        }
-        
+
         contexto = {
             'vagas':vagas, 
-            'faixas':FAIXAS,    
+            'faixas':SALARIOS,    
             'escolaridades':ESCOLARIDADES,
             'candidatos':candidatos,
             'empresas':empresas,
@@ -209,7 +196,7 @@ def confirma_candidatura(request):
 
         candidatura.save()
 
-        return redirect('dashboard')
+        return redirect('dashboard_candidato')
 
 def desistir_candidatura(request, candidatura_id):
 
@@ -218,4 +205,4 @@ def desistir_candidatura(request, candidatura_id):
     candidatura = get_object_or_404(Candidaturas, pk=candidatura_id)
     candidatura.delete()
     messages.success(request, 'Candidatura desfeita com sucesso!')
-    return redirect('dashboard')
+    return redirect('dashboard_candidato')

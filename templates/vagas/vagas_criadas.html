@@ -4,23 +4,21 @@
             <div class="col-12 col-sm-6 col-lg-4">
                 {% if vagas %}
                     {% for vaga in vagas %}
-                        {% if vaga.empresa_id == user.id %}
-                            <a href="{% url 'informacoes_vaga' vaga.id %}">
-                                <h2>{{vaga}}</h2>
-                            </a>
-                            {% for chave, valor in faixas.items %}
-                                {% if chave == vaga.faixa_salarial %}
-                                    <h5>Faixa Salarial: {{valor}}</h5>
-                                {% endif %}
-                            {% endfor %}
-                            {% for chave, valor in escolaridades.items %}
-                                {% if chave == vaga.escolaridade %}
-                                    <h5>Escolaridade Minima: {{valor}}</h5>
-                                {% endif %}
-                            {% endfor %}
-                            <a href="{% url 'editar_vagas' vaga.id %}" type="button" class="btn btn-outline-dark">Atualizar</a>
-                            <a href="{% url 'deletar_vagas' vaga.id %}" type="button" class="btn btn-outline-danger">Deletar</a>
-                        {% endif %}
+                        <a href="{% url 'informacoes_vaga' vaga.id %}">
+                            <h2>{{vaga}}</h2>
+                        </a>
+                        {% for chave, valor in faixas.items %}
+                            {% if chave == vaga.faixa_salarial %}
+                                <h5>Faixa Salarial: {{valor}}</h5>
+                            {% endif %}
+                        {% endfor %}
+                        {% for chave, valor in escolaridades.items %}
+                            {% if chave == vaga.escolaridade %}
+                                <h5>Escolaridade Minima: {{valor}}</h5>
+                            {% endif %}
+                        {% endfor %}
+                        <a href="{% url 'editar_vagas' vaga.id %}" type="button" class="btn btn-outline-dark">Atualizar</a>
+                        <a href="{% url 'deletar_vagas' vaga.id %}" type="button" class="btn btn-outline-danger">Deletar</a>
                     {% endfor %}
                 {% endif %}
             </div>
