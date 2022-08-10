@@ -35,17 +35,15 @@ def dashboard_candidato(request):
 
 def dashboard_empresa(request):
     
-    usuario_id = 0
     empresa = []
     empresas = Empresa.objects.all()
 
     for x in empresas:
         if x.usuario_empresa_id == request.user.id:
-            usuario_id = x.id
-            empresa = Empresa.objects.get(usuario_empresa_id=usuario_id)
+            empresa = Empresa.objects.get(id=x.id)
             break
     
-    vagas = Vagas.objects.filter(empresa_id=usuario_id)
+    vagas = Vagas.objects.filter(empresa_id=request.user.id)
     candidaturas = Candidaturas.objects.all()
 
     contexto = {
@@ -123,20 +121,9 @@ def informacoes_vaga(request, vaga_id):
 
     """Retorna as informações da vaga selecionada."""
 
-    vagass = Vagas.objects.filter(id=vaga_id)
     vagas = get_object_or_404(Vagas, pk=vaga_id)
     candidaturas = Candidaturas.objects.filter(vaga_id=vaga_id)
     candidatos = Candidato.objects.all()
-
-    for vaga in vagass:
-        for candidato in candidatos:
-            pontos = 0
-            if vaga.faixa_salarial == candidato.pretensao_salarial:
-                pontos += 1
-            if vaga.escolaridade == candidato.escolaridade:
-                pontos += 1
-
-    print(pontos)
 
     contexto = {
         'vagas':vagas, 

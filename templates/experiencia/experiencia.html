@@ -14,9 +14,7 @@
         <p>Empresa</p>
         {% if experiencias %}
             {% for experiencia in experiencias %}
-                {% if user.id == experiencia.usuario_experiencia_id %}
-                    <input type="textarea" name="empresa_anterior" required="required" placeholder="{{experiencia.empresa_anterior}}" />
-                {% endif %}
+            <input type="textarea" name="empresa_anterior" required="required" placeholder="{{experiencia.empresa_anterior}}" />
             {% endfor %}
         {% else %}
             <input type="textarea" name="empresa_anterior" required="required" placeholder="Insira o nome da empresa aqui." />
@@ -41,9 +39,7 @@
         <p>Descrição das Atividades</p>
         {% if experiencias %}
             {% for experiencia in experiencias %}
-                {% if user.id == experiencia.usuario_experiencia_id %}
-                    <input type="textarea" name="descricao" required="required" placeholder="{{experiencia.descricao}}" />
-                {% endif %}
+                <input type="textarea" name="descricao" required="required" placeholder="{{experiencia.descricao}}" />
             {% endfor %}
         {% else %}
             <input type="textarea" name="descricao" required="required" placeholder="Insira suas atividades principais aqui.">

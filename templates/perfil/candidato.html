@@ -13,9 +13,7 @@
                 <p>Nome Completo</p>    
                 {% if candidatos %}
                     {% for candidato in candidatos %}
-                        {% if user.id == candidato.usuario_candidato_id %}
-                            <input type="textarea" name="nome_candidato" required="required" placeholder="{{candidato}}" />
-                        {% endif %}
+                        <input type="textarea" name="nome_candidato" required="required" placeholder="{{candidato}}" />
                     {% endfor %}
                 {% else %}
                     <input type="textarea" name="nome_candidato" required="requires" placeholder="Insira seu nome aqui!">

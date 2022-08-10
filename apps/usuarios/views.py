@@ -141,7 +141,7 @@ def experiencia(request):
 
         experiencia.save()
 
-        return redirect('dashboard')
+        return redirect('dashboard_candidato')
 
     experiencias = Experiencia.objects.filter(usuario_experiencia_id = request.user.id)
     contexto = {'experiencias':experiencias}
@@ -164,9 +164,9 @@ def atualiza_experiencia(request):
 
         e.save()
 
-        return redirect('dashboard')
+        return redirect('dashboard_candidato')
 
-    experiencias = Experiencia.objects.all()
+    experiencias = Experiencia.objects.filter(usuario_experiencia_id = request.user.id)
     contexto = {'experiencias':experiencias}
 
     return render(request, 'base_experiencia.html', contexto)
@@ -184,7 +184,7 @@ def perfil_empresa(request):
 
         empresa.save()
 
-        return redirect('dashboard')
+        return redirect('dashboard_empresa')
     
 
     empresas = Empresa.objects.filter(usuario_empresa_id=request.user.id)
@@ -200,4 +200,4 @@ def atualiza_empresa(request):
 
         c.save()
 
-        return redirect('dashboard')
+        return redirect('dashboard_empresa')
