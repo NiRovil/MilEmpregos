@@ -18,7 +18,7 @@
                                             <h5>Escolaridade Minima: {{valor}}</h5>
                                         {% endif %}
                                     {% endfor %}
-                                <a href="{% url 'desistir_candidatura' candidatura.id %}" type="button" class="btn btn-outline-danger">Desistir</a>
+                                <a href="{% url 'desiste_candidatura' candidatura.id %}" type="button" class="btn btn-outline-danger">Desistir</a>
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}

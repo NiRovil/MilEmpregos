@@ -3,25 +3,35 @@ from django.contrib import messages
 from vagas.constantes import SALARIOS, ESCOLARIDADES
 from vagas.models import Vagas, Candidaturas
 from usuarios.models import Empresa, Candidato
+from django.contrib.auth.decorators import login_required
 
 def index(request):
-    return render(request, 'vagas/index.html')
 
+    """Renderiza a pagina index."""
+
+    return render(request, 'index.html')
+
+@login_required
 def dashboard_candidato(request): 
     
+    """Define os itens a serem mostrados na dashboard do candidato."""
+
     usuario_id = 0
     candidato = []
     candidatos = Candidato.objects.all()
 
+    # Itera sob a instancia de 'Candidato' para identificar se o usuário possui cadastro completo:
     for x in candidatos:
         if x.usuario_candidato_id == request.user.id:
             usuario_id = x.id
             candidato = Candidato.objects.get(id=usuario_id)
             break
-
+    
+    # Com base no resultado da iteração retorna suas candidaturas, se houver:
     candidaturas = Candidaturas.objects.filter(candidato=usuario_id)
     vagas = Vagas.objects.all()
 
+    # Define o contexto a ser usado pela pagina HTML:
     contexto = {
         'candidatos':candidatos,
         'candidato':candidato, 
@@ -31,21 +41,25 @@ def dashboard_candidato(request):
         'escolaridades':ESCOLARIDADES
     }
 
-    return render(request, 'base_dash.html', contexto)
+    return render(request, 'dashboard.html', contexto)
 
+@login_required
 def dashboard_empresa(request):
     
     empresa = []
     empresas = Empresa.objects.all()
 
+    # Itera sob a instancia de 'Empresa' para identificar se o usuário possui cadastro completo:
     for x in empresas:
         if x.usuario_empresa_id == request.user.id:
             empresa = Empresa.objects.get(id=x.id)
             break
     
+    # Retorna as vagas criadas, se houver:
     vagas = Vagas.objects.filter(empresa_id=request.user.id)
     candidaturas = Candidaturas.objects.all()
 
+    # Define o contexto a ser usado pela pagina HTML:
     contexto = {
         'empresa':empresa, 
         'vagas':vagas,
@@ -54,22 +68,22 @@ def dashboard_empresa(request):
         'escolaridades':ESCOLARIDADES
     }
 
-    return render(request, 'base_dash.html', contexto)
+    return render(request, 'dashboard.html', contexto)
 
-def cria_vagas(request):
+@login_required
+def cria_vaga(request):
     
     """Criação de vagas para candidatos."""
 
     if request.method == 'POST':
+
+        # Recupera as informações necessárias para o cadastro completo da vaga:
         empresa = request.user.id
         nome_vaga = request.POST['nome_vaga']
         faixa = request.POST['faixa']
         escolaridade = request.POST['escolaridade']
 
-        if nome_vaga == '':
-            messages.error(request, 'Nome da vaga inválido!')
-            return redirect('vagas')
-
+        # Cria uma vaga no banco de dados:
         vaga = Vagas.objects.create(
             empresa_id = empresa,
             nome_vaga = nome_vaga,
@@ -81,22 +95,26 @@ def cria_vagas(request):
 
         return redirect('dashboard_empresa')
 
-    return render(request, 'base_vagas.html')
+    return render(request, 'vagas.html')
 
-def editar_vagas(request, vaga_id):
+@login_required
+def edita_vaga(request, vaga_id):
 
     """Retorna a vaga selecionada pelo usuário."""
 
+    # Retorna com base na resposta da requisição a vaga à atualizar:
     vaga = get_object_or_404(Vagas, pk=vaga_id)
     contexto = {'vaga':vaga}
 
-    return render(request, 'vagas/atualizar_vaga.html', contexto)
+    return render(request, 'vagas/atualiza_vaga.html', contexto)
 
-def atualizar_vaga(request):
+def atualiza_vaga(request):
     
     """Atualiza a vaga selecionada."""
 
     if request.method == 'POST':
+
+        # Recupera as informações necessárias para a atualização da vaga:
         vaga_id = request.POST['vaga_id']
         v = Vagas.objects.get(pk=vaga_id)
         v.nome_vaga = request.POST['nome_vaga']
@@ -108,19 +126,23 @@ def atualizar_vaga(request):
         messages.success(request, 'Vaga atualizada com sucesso!')
         return redirect('dashboard_empresa')
 
-def deletar_vagas(request, vaga_id):
+@login_required
+def deleta_vaga(request, vaga_id):
 
     """Deleta a vaga selecionada pelo usuário."""
 
+    # Retorna com base na resposta da requisição a vaga à deletar:
     vaga = get_object_or_404(Vagas, pk=vaga_id)
     vaga.delete()
     messages.success(request, 'Vaga deletada com sucesso!')
     return redirect('dashboard_empresa')
 
-def informacoes_vaga(request, vaga_id):
+@login_required
+def informacao_vaga(request, vaga_id):
 
     """Retorna as informações da vaga selecionada."""
 
+    # Retorna com base na resposta da requisição as informações da vaga:
     vagas = get_object_or_404(Vagas, pk=vaga_id)
     candidaturas = Candidaturas.objects.filter(vaga_id=vaga_id)
     candidatos = Candidato.objects.all()
@@ -133,8 +155,9 @@ def informacoes_vaga(request, vaga_id):
         'escolaridades':ESCOLARIDADES,
     }
 
-    return render(request, 'vagas/informacoes_vaga.html', contexto)
+    return render(request, 'vagas/informacao_vaga.html', contexto)
 
+@login_required
 def vagas_disponiveis(request):
 
     """Retorna as vagas disponíveis para aplicação."""
@@ -155,20 +178,23 @@ def vagas_disponiveis(request):
             'empresas':empresas,
         }
 
-        return render(request, 'base_vagas.html', contexto)
+        return render(request, 'vagas.html', contexto)
 
+@login_required
 def candidatura(request, vaga_id, candidato_id):
 
     """Busca a vaga selecionada pelo candidato."""
 
     vaga = get_object_or_404(Vagas, pk=vaga_id)
     candidato = get_object_or_404(Candidato, pk=candidato_id)
+
     # Filtra as candidaturas já efetuadas.
     candidaturas = Candidaturas.objects.filter(vaga_id=vaga.id, candidato=candidato.id)
     contexto = {'vaga':vaga, 'candidato':candidato, 'candidaturas':candidaturas}
 
-    return render(request, 'vagas/confirmacao.html', contexto)
+    return render(request, 'vagas/confirma_vaga.html', contexto)
 
+@login_required
 def confirma_candidatura(request):
 
     """Confirma a candidatura na vaga."""
@@ -185,7 +211,8 @@ def confirma_candidatura(request):
 
         return redirect('dashboard_candidato')
 
-def desistir_candidatura(request, candidatura_id):
+@login_required
+def desiste_candidatura(request, candidatura_id):
 
     """Desiste de uma candidatura selecionada pelo usuário."""
 

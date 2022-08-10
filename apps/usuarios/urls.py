@@ -10,4 +10,5 @@ urlpatterns = [
     path('atualiza-experiencia/', views.atualiza_experiencia, name='atualiza_experiencia'),
     path('perfil-empresa/', views.perfil_empresa, name='perfil_empresa'),
     path('atualiza-empresa/', views.atualiza_empresa, name='atualiza_empresa'),
+    path('logout', views.logout, name='logout')
 ]

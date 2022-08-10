@@ -10,11 +10,11 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="{% static 'dash.css' %}">
     <link rel="stylesheet" href="{% static 'form.css' %}">
-    <title>Vagas</title>
+    <title>Atualize a vaga</title>
 </head>
 
 <body>
-    {% include 'dash/navegacao.html' %}
+    {% include 'partials/navegacao.html' %}
     <div id="throbber" style="display:none; min-height:120px;"></div>
     <div id="noty-holder"></div>
     <div id="wrapper">
@@ -23,10 +23,10 @@
                 <div class="col-md-12 dashhead">
                     <body>
                         <div class="testbox">
-                            <form method="post" action="{% url 'atualizar_vaga' %}">
+                            <form method="post" action="{% url 'atualiza_vaga' %}">
                                 {% csrf_token %}
                                 <div class="banner">
-                                    <h1>Atualize sua vaga! </h1>
+                                    <h1>Atualize sua vaga!</h1>
                                 </div>
                                 <input type="text" id="vaga_id" class="form-control" name="vaga_id" value="{{vaga.id}}" hidden>
                                 <h2>Detalhes da vaga</h2>
