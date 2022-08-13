@@ -26,6 +26,13 @@ Pré-requisitos:
 ```bash
 # clonar repositório
 git clone https://github.com/NiRovil/Teste-PythonDjango
+```
+- alterar as configurações de DATABASE em settings.py
+
+```bash
+# executar a migração do banco de dados
+python manage.py makemigrations
+python manage.py migrate
 
 # executar o projeto
 python manage.py runserver
