@@ -5,7 +5,7 @@
 
 O projeto Site de empregos é uma aplicação web, construída em Python, usando o framework Django.
 
-A aplicação consiste na criação e divugação de vagas de emprego, tal qual, a inscrição de candidatos nessas vagas.
+A aplicação consiste na criação e divulgação de vagas de emprego, tal qual, a inscrição de candidatos nessas vagas.
 
 # Tecnologias utilizadas
 ## Back end
