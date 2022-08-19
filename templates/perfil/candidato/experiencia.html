@@ -1,0 +1,70 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block content %}
+<div class="wrapper d-flex align-items-stretch">
+
+    {% include 'partials/sidebar_candidato.html' %}
+
+    <div id="content" class="p-4 p-md-5 pt-5">
+        {% if experiencias %}
+        <form method="post" action="{% url 'atualiza_experiencia' %}">
+        {% else %}
+        <form method="post" action="{% url 'experiencia' %}">
+        {% endif %}
+            {% csrf_token %}
+            <h4 class="mb-2">Atualize sua ultima experiencia</h4>
+            <h7>Se não houver experiencia anterior, deixar em branco.</h7>
+            <div>
+                <p>
+                    <h6 class="mb-1">Empresa</h6>
+                    {% if experiencias %}
+                    {% for experiencia in experiencias %}
+                    <input type="textarea" style="width: 373px;" name="empresa_anterior" required="required"
+                        placeholder="{{experiencia.empresa_anterior}}" />
+                    {% endfor %}
+                    {% else %}
+                    <input type="textarea" style="width: 373px;" name="empresa_anterior" required="required" placeholder="Insira o nome da empresa aqui." />
+                    {% endif %}
+                </p>
+            </div>
+            <div>
+                <p>
+                    <h6 class="mb-1" >Emprego Atual?</h6>
+                    <select name="emprego_atual" style="width: 373px;" id="emp">
+                        <option value="True">Sim</option>
+                        <option value="False">Não</option>
+                    </select>
+                </p>
+            </div>
+            <div>
+                <p>
+                    <h6 class="mb-1">Data Inicio</h6>
+                    <input type="date" style="width: 373px;" name="data_inicio"/>
+                </p>
+            </div>
+            <div class="date">
+                <p>
+                    <h6 class="mb-1">Data Fim</h6>
+                    <input type="date" style="width: 373px;" name="data_fim" />
+                </p>
+            </div>
+            <div>
+                <p>Descrição das Atividades</p>
+                {% if experiencias %}
+                {% for experiencia in experiencias %}
+                <textarea name="descricao" cols="50" rows="5" required="required" placeholder="{{experiencia.descricao}}"></textarea>
+                {% endfor %}
+                {% else %}
+                <input type="textarea" name="descricao" required="required"
+                    placeholder="Insira suas atividades principais aqui.">
+                {% endif %}
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-outline-success">Confirmar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

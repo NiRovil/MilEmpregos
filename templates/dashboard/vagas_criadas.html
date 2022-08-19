@@ -1,27 +1,19 @@
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-sm-6 col-lg-4">
-                {% if vagas %}
-                    {% for vaga in vagas %}
-                        <a href="{% url 'informacao_vaga' vaga.id %}">
-                            <h2>{{vaga}}</h2>
-                        </a>
-                        {% for chave, valor in faixas.items %}
-                            {% if chave == vaga.faixa_salarial %}
-                                <h5>Faixa Salarial: {{valor}}</h5>
-                            {% endif %}
-                        {% endfor %}
-                        {% for chave, valor in escolaridades.items %}
-                            {% if chave == vaga.escolaridade %}
-                                <h5>Escolaridade Minima: {{valor}}</h5>
-                            {% endif %}
-                        {% endfor %}
-                        <a href="{% url 'edita_vaga' vaga.id %}" type="button" class="btn btn-outline-dark">Atualizar</a>
-                        <a href="{% url 'deleta_vaga' vaga.id %}" type="button" class="btn btn-outline-danger">Deletar</a>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</section>
+{% if vagas %}
+    {% for vaga in vagas %}
+        <a href="{% url 'informacao_vaga' vaga.id %}">
+            <h2>{{vaga}}</h2>
+        </a>
+        {% for chave, valor in faixas.items %}
+            {% if chave == vaga.faixa_salarial %}
+                <h5>Faixa Salarial: {{valor}}</h5>
+            {% endif %}
+        {% endfor %}
+        {% for chave, valor in escolaridades.items %}
+            {% if chave == vaga.escolaridade %}
+                <h5>Escolaridade Minima: {{valor}}</h5>
+            {% endif %}
+        {% endfor %}
+        <a href="{% url 'edita_vaga' vaga.id %}" type="button" class="btn btn-outline-dark">Atualizar</a>
+        <a href="{% url 'deleta_vaga' vaga.id %}" type="button" class="btn btn-outline-danger">Deletar</a>
+    {% endfor %}
+{% endif %}

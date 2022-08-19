@@ -1,0 +1,58 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block content %}
+
+<div class="wrapper d-flex align-items-stretch">
+
+    {% include 'partials/sidebar_index.html' %}
+
+    <div id="content" class="p-4 p-md-5 pt-5">
+        <form method="post" action="{% url 'cadastro' %}"> 
+            {% csrf_token %}
+            <h4 class="mb-2">Cadastro</h4> 
+            <p> 
+                <h6 class="mb-1">Nome</h6>
+                <input id="nome_cad" style="width: 373px;" name="nome" required="required" type="text" placeholder="Nicolas" />
+            </p>
+
+            <p> 
+                <h6 class="mb-1">Sobrenome</h6>
+                <input id="nome_cad" style="width: 373px;" name="sobrenome" required="required" type="text" placeholder="Robert Vilela" />
+            </p>
+
+            <p> 
+                <h6 class="mb-1">Seu email</h6>
+                <input id="email_cad" style="width: 373px;" name="email" required="required" type="email" placeholder="nicolas199851@hotmail.com"/> 
+            </p>
+
+            <p> 
+                <h6 class="mb-1">Sua senha</h6>
+                <input id="senha_cad" style="width: 373px;" name="senha" required="required" type="password" placeholder="1234"/>
+            </p>
+
+            <p> 
+                <h6 class="mb-1">Repita sua senha</h6>
+                <input id="senha_cad" style="width: 373px;" name="senha2" required="required" type="password" placeholder="1234"/>
+            </p>
+
+            <p>
+                <h6 class="mb-1">Selecione um tipo de usuário</h6>
+                <select name="usuario" style="width: 373px;" id="tipo_usuario">
+                    <option value="False">Candidato</option>
+                    <option value="True">Empresa</option>
+                </select>
+            </p>
+
+            <p> 
+                <button type="submit" class="btn btn-outline-success">Cadastrar</button>
+            </p>
+
+            <p class="link">  
+            Já tem conta?
+            <a href="{% url 'login' %}"> Ir para Login </a>
+            </p>        
+        </form>
+    </div>
+</div>
+
+{% endblock %}  

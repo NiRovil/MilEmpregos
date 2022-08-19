@@ -3,6 +3,13 @@ body{
     background-color: white;
   }
   
+  .container {
+    height: 100px;
+    position: relative;
+    left: auto;
+    top: auto;
+  }
+  
   /*navbar start*/
   
   @media(min-width:768px) {

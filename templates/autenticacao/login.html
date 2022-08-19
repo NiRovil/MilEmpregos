@@ -1,0 +1,36 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block content %}
+
+<div class="wrapper d-flex align-items-stretch">
+
+    {% include 'partials/sidebar_index.html' %}
+
+    <div id="content" class="p-4 p-md-5 pt-5">
+        <form method="post" action="{% url 'login' %}"> 
+            {% csrf_token %}
+            <h4 class="mb-2">Login</h4>
+
+            <p>
+                <h6 class="mb-1">Seu email:</h6>
+                <input id="email_login" style="width: 373px;" name="email" required="required" type="text" placeholder="nicolas199851@hotmail.com"/>
+            </p>
+
+            <p>
+                <h6 class="mb-1">Sua senha:</h6>
+                <input id="senha_login" style="width: 373px;" name="senha" required="required" type="password" placeholder="1234" /> 
+            </p>
+
+            <p> 
+                <button type="submit" class="btn btn-outline-success">Logar</button> 
+            </p>
+
+            <p class="link">
+            Ainda não tem conta?
+            <a href="{% url 'cadastro' %}">Cadastre-se</a>
+            </p>
+            
+        </form>
+    </div>
+</div>
+{% endblock %}

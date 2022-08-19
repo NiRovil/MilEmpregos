@@ -25,7 +25,6 @@ def dashboard_candidato(request):
         if x.usuario_candidato_id == request.user.id:
             usuario_id = x.id
             candidato = Candidato.objects.get(id=usuario_id)
-            break
     
     # Com base no resultado da iteração retorna suas candidaturas, se houver:
     candidaturas = Candidaturas.objects.filter(candidato=usuario_id)
@@ -41,7 +40,7 @@ def dashboard_candidato(request):
         'escolaridades':ESCOLARIDADES
     }
 
-    return render(request, 'dashboard.html', contexto)
+    return render(request, 'dashboard/dashboard_candidato.html', contexto)
 
 @login_required
 def dashboard_empresa(request):
@@ -68,7 +67,7 @@ def dashboard_empresa(request):
         'escolaridades':ESCOLARIDADES
     }
 
-    return render(request, 'dashboard.html', contexto)
+    return render(request, 'dashboard/dashboard_empresa.html', contexto)
 
 @login_required
 def cria_vaga(request):
@@ -178,7 +177,7 @@ def vagas_disponiveis(request):
             'empresas':empresas,
         }
 
-        return render(request, 'vagas.html', contexto)
+        return render(request, 'vagas/vagas_disponiveis.html', contexto)
 
 @login_required
 def candidatura(request, vaga_id, candidato_id):

@@ -1,0 +1,57 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block content %}
+
+<div class="wrapper d-flex align-items-stretch">
+
+    {% include 'partials/sidebar_candidato.html' %}
+
+    <div id="content" class="p-4 p-md-5 pt-5">
+        {% if candidatos %}
+        <form method="post" action="{% url 'atualiza_candidato' %}">
+        {% else %}
+        <form method="post" action="{% url 'perfil_candidato' %}">
+        {% endif %}
+            {% csrf_token %}
+            <h4 class="mb-6">Atualize seu perfil</h4>
+                <div>
+                    <h6 class="mb-1">Nome Completo</h6>
+                    {% if candidatos %}
+                        {% for candidato in candidatos %}
+                        <input type="textarea" style="width: 373px;" name="nome_candidato" required="required" placeholder="{{candidato}}" />
+                        {% endfor %}
+                    {% else %}
+                    <input type="textarea" style="width: 373px;" name="nome_candidato" required="requires" placeholder="Insira seu nome aqui!">
+                    {% endif %}
+                </div> 
+                <p>
+                <h6 class="mb-1">Pretensão Salárial</h6>
+                <select name="faixa" style="width: 373px;" id="faixa_salarial">
+                    <option value="1K">Até 1.000</option>
+                    <option value="2K">De 1.000 à 2.000</option>
+                    <option value="3K">De 2.000 à 3.000</option>
+                    <option value="4K">Acima de 3.000</option>
+                </select>
+                </p>
+                <div>
+                    <h6 class="mb-1">Escolaridade</h6>
+                    <select name="escolaridade" style="width: 373px;" id="escolaridade_minima">
+                        <option value="EF">Ensino Fundamental</option>
+                        <option value="EM">Ensino Médio</option>
+                        <option value="TC">Tecnólogo</option>
+                        <option value="ES">Ensino Superior</option>
+                        <option value="PG">Pós / MBA / Mestrado</option>
+                        <option value="DT">Doutorado</option>
+                    </select>
+                </div>
+                <p>
+                    <div>                       
+                        <button type="submit" class="btn btn-outline-success">Confirmar</button>
+                    </div>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

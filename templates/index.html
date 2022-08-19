@@ -1,18 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Index</title>
-</head>
+<div class="wrapper d-flex align-items-stretch">
+    
+    {% include 'partials/sidebar_index.html' %}
 
-<body>
-    <a href="{% url 'cadastro' %}"><button type="button" class="btn btn-outline-primary">Cadastro</button></a>
-    <a href="{% url 'login' %}"><button type="button" class="btn btn-outline-primary">Login</button></a>
-</body>
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+        <h2 class="mb-4">Bem Vindo!</h2>
+        <h4>Sobre o projeto</h4>
+        <p>O projeto MilEmpregos é uma aplicação web, construída em Python, usando o framework Django. </p>
+        <p>A aplicação consiste na criação e divulgação de vagas de emprego, tal qual, a inscrição de candidatos nessas vagas.</p>
+        <h4>Tecnologias utilizadas</h4>
+            <h6>Back end</h6>
+            <ul>
+                <li>
+                    Python
+                </li>
+                <li>
+                    Django
+                </li>
+            </ul>
+            <h6>Front End</h6>
+            <ul>
+                <li>
+                    HTML / CSS *templates utilizados: <a href="https://colorlib.com" target="_blank">colorlib.com</a>
+                </li>
+            </ul>
+        <h4>Recursos</h4>
+        <ul>
+            <li>
+                Cadastrar usuários (candidatos e empresas)
+            </li>
+            <li>
+                Autenticação e login
+            </li>
+            <li>
+                Cadastrar/deletar vagas
+            </li>
+            <li>
+                Candidatura/desistencia de vagas
+            </li>
+            <li>
+                Atualizar perfil e experiências
+            </li>
+        </ul>
+    </div>
+</div>
 
-</html>
+{% endblock %}

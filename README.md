@@ -1,9 +1,9 @@
-# Site de Empregos 
+# MilEmpregos 
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/NiRovil/Teste-PythonDjango/blob/main/LICENSE) 
 
 ### Sobre o projeto
 
-O projeto Site de Empregos é uma aplicação web, construída em Python, usando o framework Django.
+O projeto MilEmpregos é uma aplicação web, construída em Python, usando o framework Django.
 
 A aplicação consiste na criação e divulgação de vagas de emprego, tal qual, a inscrição de candidatos nessas vagas.
 

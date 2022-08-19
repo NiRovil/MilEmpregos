@@ -1,35 +1,28 @@
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-sm-6 col-lg-4">
-                {% if candidato %}
-                    {% if candidaturas %}
-                        {% for candidatura in candidaturas %}
-                            {% for vaga in vagas %}
-                                {% if vaga.id == candidatura.vaga_id %}
-                                <h2>{{vaga}}</h2>
-                                    {% for chave, valor in faixas.items %}
-                                        {% if chave == vaga.faixa_salarial %}
-                                            <h5>Faixa Salarial: {{valor}}</h5>
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% for chave, valor in escolaridades.items %}
-                                        {% if chave == vaga.escolaridade %}
-                                            <h5>Escolaridade Minima: {{valor}}</h5>
-                                        {% endif %}
-                                    {% endfor %}
-                                <a href="{% url 'desiste_candidatura' candidatura.id %}" type="button" class="btn btn-outline-danger">Desistir</a>
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                    {% else %}
-                        <h3>Nenhuma candidatura encontrada!</h3>
-                        <a href="{% url 'vagas_disponiveis' %}">
-                            <h5>Clique aqui para encontrar a vaga ideal!</h5>
-                        </a>
-                    {% endif %}
+
+{% if candidato %}
+    {% if candidaturas %}
+        {% for candidatura in candidaturas %}
+            {% for vaga in vagas %}
+                {% if vaga.id == candidatura.vaga_id %}
+                <h5 class="mb-1">Empresa: {{vaga}}</h5>
+                    {% for chave, valor in faixas.items %}
+                        {% if chave == vaga.faixa_salarial %}
+                            <h6 class="mb-1">Faixa Salarial: {{valor}}</h6>
+                        {% endif %}
+                    {% endfor %}
+                    {% for chave, valor in escolaridades.items %}
+                        {% if chave == vaga.escolaridade %}
+                            <h6 class="mb-1">Escolaridade Minima: {{valor}}</h6>
+                        {% endif %}
+                    {% endfor %}
+                <a href="{% url 'desiste_candidatura' candidatura.id %}" type="button" class="btn btn-outline-danger">Desistir</a>
                 {% endif %}
-            </div>
-        </div>
-    </div>
-</section>
+            {% endfor %}
+        {% endfor %}
+    {% else %}
+        <h5 class="mb-1">Nenhuma candidatura encontrada!</h5>
+        <a href="{% url 'vagas_disponiveis' %}">
+            <h7>Clique aqui para encontrar a vaga ideal!</h7>
+        </a>
+    {% endif %}
+{% endif %}

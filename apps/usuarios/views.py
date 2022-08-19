@@ -48,7 +48,7 @@ def cadastro(request):
         # Redireciona o usuário para a tela de login:
         return redirect('login')
 
-    return render(request, 'login_cadastro/cadastro.html')
+    return render(request, 'autenticacao/cadastro.html')
 
 def login(request):
     
@@ -78,9 +78,9 @@ def login(request):
 
         # Caso o email não seja encontrado, uma mensagem de erro é exibida:
         messages.error(request, 'Usuário não encontrado! Favor, verifique o email ou cadastre-se!')
-        return render(request, 'login_cadastro/login.html')
+        return render(request, 'autenticacao/login.html')
     
-    return render(request, 'login_cadastro/login.html')
+    return render(request, 'autenticacao/login.html')
 
 @login_required
 def perfil_candidato(request):
@@ -111,7 +111,7 @@ def perfil_candidato(request):
     candidatos = Candidato.objects.filter(usuario_candidato_id=usuario)
     contexto = {'candidatos':candidatos}
 
-    return render(request, 'perfil.html', contexto)
+    return render(request, 'perfil/candidato/perfil.html', contexto)
 
 @login_required
 def atualiza_candidato(request):
@@ -174,7 +174,7 @@ def experiencia(request):
     experiencias = Experiencia.objects.filter(usuario_experiencia_id = usuario)
     contexto = {'experiencias':experiencias}
     
-    return render(request, 'experiencia.html', contexto)
+    return render(request, 'perfil/candidato/experiencia.html', contexto)
 
 @login_required
 def atualiza_experiencia(request):
