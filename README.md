@@ -1,5 +1,5 @@
 # MilEmpregos 
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/NiRovil/Teste-PythonDjango/blob/main/LICENSE) 
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/NiRovil/MilEmpregos/blob/main/LICENSE) 
 
 ### Sobre o projeto
 
@@ -12,7 +12,7 @@ A aplicação consiste na criação e divulgação de vagas de emprego, tal qual
 - Python
 - Django
 ### Front end
-- HTML / CSS 
+- HTML / CSS - templates by: [colorlib.com](https://colorlib.com/)
 
 # Recursos
 
@@ -41,7 +41,7 @@ pip install -r requirements.txt
 ### Instalação
 ```bash
 # clonar repositório
-git clone https://github.com/NiRovil/Teste-PythonDjango
+git clone https://github.com/NiRovil/MilEmpregos
 ```
 
 ### Configuração
@@ -91,13 +91,15 @@ Para rodar esse container você precisa do docker instalado em sua máquina.
 
 Abaixo algumas configurações para a inicialização do ambiente docker.
 
+### Instalação
+```bash
+# clonar repositório
+git clone https://github.com/NiRovil/MilEmpregos
+```
+
 #### Atentar-se que os arquivos a seguir precisam estar no mesmo diretorio do projeto!
 
 ### Dockerfile
-
-#### Variáveis de ambiente
-
-`WORKDIR` > Diretorio onde está localizado o projeto
 
 ##### Dockerfile
 
@@ -108,7 +110,9 @@ ENV PYTHONDONTWRITEBYTECODE=1
 
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR ../Teste-PythonDjango
+WORKDIR /code
+
+RUN mkdir /code
 
 COPY requirements.txt /code/
 
@@ -118,13 +122,6 @@ COPY . /code/
 ```
 
 ### Docker Compose
-
-#### Variáveis de ambiente
-
-- `POSTGRES_NAME` > Nome da database
-- `POSTGRES_DB` > Nome da database
-- `POSTGRES_USER` > Nome do usuário da database
-- `POSTGRES_PASSWORD` > Senha para acesso a database
 
 ##### docker-compose.yml
 
@@ -137,33 +134,20 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=...
-      - POSTGRES_USER=...
-      - POSTGRES_PASSWORD=...
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
   web:
     build: .
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python /code/manage.py makemigrations && python /code/manage.py migrate && python /code/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:
       - "8000:8000"
     environment:
-      - POSTGRES_NAME=...
-      - POSTGRES_USER=...
-      - POSTGRES_PASSWORD=...
-    depends_on:
-      - db
-```
-```bash
-# Caso queira uma versão interativa com o banco de dados, anexar o código abaixo ao docker-compose.yml:
-
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ...
-      PGADMIN_DEFAULT_PASSWORD: ...
-    ports:
-      - "16543:80"
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     depends_on:
       - db
 ```
@@ -181,7 +165,7 @@ DATABASES = {
         'NAME': os.environ.get('POSTGRES_NAME'),
         'USER': os.environ.get('POSTGRES_USER'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': 'db'
+        'HOST': 'db',
         'PORT': 5432,
     }
 }
@@ -196,10 +180,6 @@ docker-compose up
 
 Para visualizar o conteúdo da aplicação basta acessar
 - localhost:8000
-
-Para visualizar o conteúdo do banco de dados basta acessar
-- localhost:16543
-
 
 # Autor
 
