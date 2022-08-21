@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="wrapper d-flex align-items-stretch">
+    
+    {% include 'partials/sidebars/candidato.html' %}
+
+    <div id="content" class="p-4 p-md-5 pt-5">
+        {% include 'partials/alertas.html' %}
+        <form method="post" action="{% url 'confirmacao' %}">
+            {% csrf_token %}
+            <input type="text" id="vaga_id" class="form-control" name="vaga_id" value="{{vaga.id}}" hidden>
+            <input type="text" id="candidato_id" class="form-control" name="candidato_id" value="{{candidato.id}}" hidden>
+            {% if candidaturas %}
+                <h4>Candidatura já foi efetuada para esta vaga!</h4>
+                <a href="{% url 'vagas_disponiveis' %}" type="button" class="btn btn-outline-dark">Retornar</a>
+            {% else %}
+                <h4>Confirma a candidatura?</h4>
+                <button class="btn btn-outline-dark" type="submit">Sim</button>
+                <a href="{% url 'vagas_disponiveis' %}" type="button" class="btn btn-outline-dark">Não</a>    
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

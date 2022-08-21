@@ -1,10 +1,9 @@
-
 {% if candidato %}
     {% if candidaturas %}
         {% for candidatura in candidaturas %}
             {% for vaga in vagas %}
                 {% if vaga.id == candidatura.vaga_id %}
-                <h5 class="mb-1">Empresa: {{vaga}}</h5>
+                <h5 class="mb-1">{{vaga}}</h5>
                     {% for chave, valor in faixas.items %}
                         {% if chave == vaga.faixa_salarial %}
                             <h6 class="mb-1">Faixa Salarial: {{valor}}</h6>

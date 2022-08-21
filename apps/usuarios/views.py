@@ -104,6 +104,7 @@ def perfil_candidato(request):
         )
 
         candidato.save()
+        messages.success(request, 'Perfil criado com sucesso!')
 
         return redirect('experiencia')
 
@@ -128,8 +129,9 @@ def atualiza_candidato(request):
         c.escolaridade = request.POST['escolaridade']
 
         c.save()
+        messages.success(request, 'Perfil atualizado com sucesso!')
 
-        return redirect('atualiza_experiencia')
+        return redirect('dashboard_candidato')
 
     usuario = request.user.id
     candidatos = Candidato.objects.filter(usuario_candidato_id = usuario)
@@ -189,7 +191,10 @@ def atualiza_experiencia(request):
         e = Experiencia.objects.get(usuario_experiencia_id=usuario)
         e.empresa_anterior = request.POST['empresa_anterior']
         e.emprego_atual = request.POST['emprego_atual']
-        e.data_inicio = request.POST['data_inicio']
+        if request.POST['data_inicio'] != '':
+            e.data_inicio = request.POST['data_inicio']
+        else:
+            e.data_inicio = '9999-12-31'
         if request.POST['data_fim'] != '':
             e.data_fim = request.POST['data_fim']
         else:
@@ -197,6 +202,7 @@ def atualiza_experiencia(request):
         e.descricao = request.POST['descricao']
 
         e.save()
+        messages.success(request, 'Experiencia atualizada com sucesso!')
 
         return redirect('dashboard_candidato')
 
@@ -204,7 +210,7 @@ def atualiza_experiencia(request):
     experiencias = Experiencia.objects.filter(usuario_experiencia_id = usuario)
     contexto = {'experiencias':experiencias}
 
-    return render(request, 'experiencia.html', contexto)
+    return render(request, 'perfil/candidato/experiencia.html', contexto)
 
 @login_required
 def perfil_empresa(request):
@@ -223,13 +229,14 @@ def perfil_empresa(request):
         )
 
         empresa.save()
+        messages.success(request, 'Perfil criado com sucesso!')
 
         return redirect('dashboard_empresa')
     
     usuario = request.user.id
     empresas = Empresa.objects.filter(usuario_empresa_id=usuario)
     contexto = {'empresas':empresas}
-    return render(request, 'perfil.html', contexto)
+    return render(request, 'perfil/empresa/perfil.html', contexto)
 
 @login_required
 def atualiza_empresa(request):
@@ -244,6 +251,7 @@ def atualiza_empresa(request):
         c.nome_empresa = request.POST['nome_empresa']
 
         c.save()
+        messages.success(request, 'Perfil atualizado com sucesso!')
 
         return redirect('dashboard_empresa')
 

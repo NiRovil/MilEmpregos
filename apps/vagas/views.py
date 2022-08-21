@@ -9,7 +9,7 @@ def index(request):
 
     """Renderiza a pagina index."""
 
-    return render(request, 'index.html')
+    return render(request, 'index/index.html')
 
 @login_required
 def dashboard_candidato(request): 
@@ -40,7 +40,7 @@ def dashboard_candidato(request):
         'escolaridades':ESCOLARIDADES
     }
 
-    return render(request, 'dashboard/dashboard_candidato.html', contexto)
+    return render(request, 'dashboard/candidato.html', contexto)
 
 @login_required
 def dashboard_empresa(request):
@@ -52,7 +52,6 @@ def dashboard_empresa(request):
     for x in empresas:
         if x.usuario_empresa_id == request.user.id:
             empresa = Empresa.objects.get(id=x.id)
-            break
     
     # Retorna as vagas criadas, se houver:
     vagas = Vagas.objects.filter(empresa_id=request.user.id)
@@ -67,7 +66,7 @@ def dashboard_empresa(request):
         'escolaridades':ESCOLARIDADES
     }
 
-    return render(request, 'dashboard/dashboard_empresa.html', contexto)
+    return render(request, 'dashboard/empresa.html', contexto)
 
 @login_required
 def cria_vaga(request):
@@ -91,10 +90,11 @@ def cria_vaga(request):
         )
 
         vaga.save()
+        messages.success(request, 'Vaga criada com sucesso!')
 
         return redirect('dashboard_empresa')
 
-    return render(request, 'vagas.html')
+    return render(request, 'vagas/criar.html')
 
 @login_required
 def edita_vaga(request, vaga_id):
@@ -105,7 +105,7 @@ def edita_vaga(request, vaga_id):
     vaga = get_object_or_404(Vagas, pk=vaga_id)
     contexto = {'vaga':vaga}
 
-    return render(request, 'vagas/atualiza_vaga.html', contexto)
+    return render(request, 'vagas/atualizar.html', contexto)
 
 def atualiza_vaga(request):
     
@@ -121,8 +121,8 @@ def atualiza_vaga(request):
         v.escolaridade = request.POST['escolaridade']
 
         v.save()
-
         messages.success(request, 'Vaga atualizada com sucesso!')
+        
         return redirect('dashboard_empresa')
 
 @login_required
@@ -154,7 +154,7 @@ def informacao_vaga(request, vaga_id):
         'escolaridades':ESCOLARIDADES,
     }
 
-    return render(request, 'vagas/informacao_vaga.html', contexto)
+    return render(request, 'vagas/informacao.html', contexto)
 
 @login_required
 def vagas_disponiveis(request):
@@ -177,7 +177,7 @@ def vagas_disponiveis(request):
             'empresas':empresas,
         }
 
-        return render(request, 'vagas/vagas_disponiveis.html', contexto)
+        return render(request, 'vagas/disponiveis.html', contexto)
 
 @login_required
 def candidatura(request, vaga_id, candidato_id):
@@ -191,7 +191,7 @@ def candidatura(request, vaga_id, candidato_id):
     candidaturas = Candidaturas.objects.filter(vaga_id=vaga.id, candidato=candidato.id)
     contexto = {'vaga':vaga, 'candidato':candidato, 'candidaturas':candidaturas}
 
-    return render(request, 'vagas/confirma_vaga.html', contexto)
+    return render(request, 'vagas/confirmar.html', contexto)
 
 @login_required
 def confirma_candidatura(request):
@@ -207,6 +207,7 @@ def confirma_candidatura(request):
         )
 
         candidatura.save()
+        messages.success(request, 'Candidatura efetuada com sucesso! Boa sorte!')
 
         return redirect('dashboard_candidato')
 

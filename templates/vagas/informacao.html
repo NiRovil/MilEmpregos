@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="wrapper d-flex align-items-stretch">
+
+    {% include 'partials/sidebars/empresa.html' %}
+
+    <div id="content" class="p-4 p-md-5 pt-5">
+        {% include 'partials/alertas.html' %}
+        <form>
+            <h2>Candidatos</h2>
+            <div class="container">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col" colspan="1">Nome Completo</th>
+                            <th scope="col" colspan="1">Faixa Salarial Pretendida</th>
+                            <th scope="col" colspan="1">Escolaridade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for candidato in candidatos %}
+                        <tr>
+                            {% for candidatura in candidaturas %}
+                            {% if candidatura.candidato == candidato.id %}
+                            <td>{{candidato}}</td>
+                            {% for chave, valor in faixas.items %}
+                            {% if chave == candidato.pretensao_salarial %}
+                            <td>{{valor}}</td>
+                            {% endif %}
+                            {% endfor %}
+                            {% for chave, valor in escolaridades.items %}
+                            {% if chave == candidato.escolaridade %}
+                            <td>{{valor}}</td>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,11 +1,13 @@
-{% extends 'dashboard.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block content %}
 <div class="wrapper d-flex align-items-stretch">
 
-    {% include 'partials/sidebar_candidato.html' %}
+    {% include 'partials/sidebars/candidato.html' %}
 
     <div id="content" class="p-4 p-md-5 pt-5">
+        {% include 'partials/alertas.html' %}
+        
         {% if experiencias %}
         <form method="post" action="{% url 'atualiza_experiencia' %}">
         {% else %}
@@ -52,10 +54,10 @@
                 <p>Descrição das Atividades</p>
                 {% if experiencias %}
                 {% for experiencia in experiencias %}
-                <textarea name="descricao" cols="50" rows="5" required="required" placeholder="{{experiencia.descricao}}"></textarea>
+                <textarea name="descricao" cols="50" rows="5" placeholder="{{experiencia.descricao}}"></textarea>
                 {% endfor %}
                 {% else %}
-                <input type="textarea" name="descricao" required="required"
+                <input type="textarea" name="descricao"
                     placeholder="Insira suas atividades principais aqui.">
                 {% endif %}
                 </div>

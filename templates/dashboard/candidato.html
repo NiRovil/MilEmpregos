@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="wrapper d-flex align-items-stretch">
+
+    {% include 'partials/sidebars/candidato.html' %}
+
+    <!-- Page Content  -->
+    
+    <div id="content" class="p-4 p-md-5 pt-5">
+        {% include 'partials/alertas.html' %}
+        
+        {% if candidato %}
+        <h4 class="mb-2">Olá, {{candidato}}!</h4>
+        <h6 class="mb-5">Abaixo as vagas que você se candidatou!</h6>
+        {% include 'vagas/inscritas.html' %}
+        {% else %}
+        <h4 class="mb-2">Bem vindo!</h4>
+        <h6>Para começar, atualize suas informações na aba perfil.</h6>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

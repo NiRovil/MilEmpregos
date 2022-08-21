@@ -1,12 +1,14 @@
-{% extends 'dashboard.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block content %}
 
 <div class="wrapper d-flex align-items-stretch">
 
-    {% include 'partials/sidebar_candidato.html' %}
+    {% include 'partials/sidebars/candidato.html' %}
 
     <div id="content" class="p-4 p-md-5 pt-5">
+        {% include 'partials/alertas.html' %}
+        
         {% if candidatos %}
         <form method="post" action="{% url 'atualiza_candidato' %}">
         {% else %}

@@ -1,10 +1,10 @@
-{% extends 'dashboard.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block content %}
 
 <div class="wrapper d-flex align-items-stretch">
 
-    {% include 'partials/sidebar_index.html' %}
+    {% include 'partials/sidebars/index.html' %}
 
     <div id="content" class="p-4 p-md-5 pt-5">
         <form method="post" action="{% url 'cadastro' %}"> 

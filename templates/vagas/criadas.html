@@ -1,19 +1,24 @@
 {% if vagas %}
     {% for vaga in vagas %}
         <a href="{% url 'informacao_vaga' vaga.id %}">
-            <h2>{{vaga}}</h2>
+            <h5 class="mb-1">{{vaga}}</h5>
         </a>
         {% for chave, valor in faixas.items %}
             {% if chave == vaga.faixa_salarial %}
-                <h5>Faixa Salarial: {{valor}}</h5>
+                <h6 class="mb-1">Faixa Salarial: {{valor}}</h6>
             {% endif %}
         {% endfor %}
         {% for chave, valor in escolaridades.items %}
             {% if chave == vaga.escolaridade %}
-                <h5>Escolaridade Minima: {{valor}}</h5>
+                <h6 class="mb-1">Escolaridade Minima: {{valor}}</h6>
             {% endif %}
         {% endfor %}
         <a href="{% url 'edita_vaga' vaga.id %}" type="button" class="btn btn-outline-dark">Atualizar</a>
         <a href="{% url 'deleta_vaga' vaga.id %}" type="button" class="btn btn-outline-danger">Deletar</a>
     {% endfor %}
+{% else %}
+    <h5 class="mb-1">Nenhuma vaga criada!</h5>
+    <a href="{% url 'vagas' %}">
+        <h7>Clique aqui para criar a vaga ideal!</h7>
+    </a>
 {% endif %}

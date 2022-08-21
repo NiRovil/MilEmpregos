@@ -1,17 +1,18 @@
-{% extends 'dashboard.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block content %}
 
 <div class="wrapper d-flex align-items-stretch">
     
-    {% include 'partials/sidebar_candidato.html' %}
+    {% include 'partials/sidebars/empresa.html' %}
 
-    <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5 pt-5">
-        {% if candidato %}
-        <h4 class="mb-2">Olá, {{candidato}}!</h4>
-        <h6 class="mb-5">Abaixo as vagas que você se candidatou!</h6>
-        {% include 'dashboard/vagas_inscritas.html' %}
+        {% include 'partials/alertas.html' %}
+
+        {% if empresa %}
+        <h4 class="mb-2">Olá, {{empresa}}!</h4>
+        <h6 class="mb-5">Abaixo as vagas que você criou</h6>
+        {% include 'vagas/criadas.html' %}
         {% else %}
         <h4 class="mb-2">Bem vindo!</h4>
         <h6>Para começar, atualize suas informações na aba perfil.</h6>

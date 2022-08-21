@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="wrapper d-flex align-items-stretch">
+
+    {% include 'partials/sidebars/empresa.html' %}
+
+    <div id="content" class="p-4 p-md-5 pt-5">
+
+        {% if empresas %}
+        <form method="post" action="{% url 'atualiza_empresa' %}">
+        {% else %}
+        <form method="post" action="{% url 'perfil_empresa' %}">
+        {% endif %}
+            {% csrf_token %}
+                <h4 class="mb-6">Atualize seu perfil</h4>
+                    <p>
+                        <div>
+                            <h6 class="mb-1">Nome da empresa</h6>
+                            {% if empresas %}
+                                {% for empresa in empresas %}
+                                    {% if user.id == empresa.usuario_empresa_id %}
+                                        <input type="text" style="width: 373px;" name="nome_empresa" required="required" placeholder="{{empresa}}"/>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <input type="text" name="nome_empresa" required="required" placeholder="Insira o nome da empresa aqui."/>
+                            {% endif %}
+                        </div>
+                    </p>
+                    <div>                                   
+                        <button type="submit" class="btn btn-outline-success">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
