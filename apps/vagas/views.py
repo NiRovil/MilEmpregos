@@ -117,7 +117,7 @@ def atualiza_vaga(request):
         vaga_id = request.POST['vaga_id']
         v = Vagas.objects.get(pk=vaga_id)
         v.nome_vaga = request.POST['nome_vaga']
-        v.faixa = request.POST['faixa']
+        v.faixa_salarial = request.POST['faixa']
         v.escolaridade = request.POST['escolaridade']
 
         v.save()
