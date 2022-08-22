@@ -22,6 +22,24 @@ A aplicação consiste na criação e divulgação de vagas de emprego, tal qual
 - Candidatura/desistencia de vagas;
 - Atualizar perfil e experiências.
 
+# Demonstração
+
+### Index
+
+![alt text](https://github.com/NiRovil/MilEmpregos/blob/main/media/fotos/Pagina%20Inicial%20s%20Sidebar.png)
+
+### Dashboard candidatos
+
+![alt text](https://github.com/NiRovil/MilEmpregos/blob/main/media/fotos/Dashboard%20candidato.png)
+
+### Dashboard empresas
+
+![alt text](https://github.com/NiRovil/MilEmpregos/blob/main/media/fotos/Dashboard%20empresas.png)
+
+#### Mais conteúdo em
+
+[Imagens do projeto](https://github.com/NiRovil/MilEmpregos/tree/main/media/fotos)
+
 # Como executar o projeto em ambiente local
 
 ### Pré-requisitos: 
