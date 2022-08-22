@@ -7,6 +7,7 @@
     {% include 'partials/sidebars/index.html' %}
 
     <div id="content" class="p-4 p-md-5 pt-5">
+        {% include 'partials/alertas.html' %}
         <form method="post" action="{% url 'cadastro' %}"> 
             {% csrf_token %}
             <h4 class="mb-2">Cadastro</h4> 

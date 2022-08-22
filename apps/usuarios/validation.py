@@ -5,7 +5,7 @@ def valida_cadastro_nome(request, nome, sobrenome):
 
     """Verifica se o campo nome está em branco."""
 
-    if not nome.strip() or not sobrenome.strip():
+    if not nome.strip() or not sobrenome.strip(): 
         messages.error(request, 'Campo nome e sobrenome não pode estar em branco!')
         return True
 

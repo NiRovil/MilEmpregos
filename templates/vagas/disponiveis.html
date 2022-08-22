@@ -13,7 +13,7 @@
             {% for vaga in vagas %}
                 <p>
                     <div class="container" style="border: 2px solid rgb(29, 9, 211);">
-                        <h4 class="mb-1">{{vaga}}</h2>
+                        <h4 class="mb-1">{{vaga}}</h4>
                         {% for chave, valor in faixas.items %}
                             {% if chave == vaga.faixa_salarial %}
                                 <h6 class="mb-1">Faixa Salarial: {{valor}}</h6>
@@ -30,6 +30,8 @@
                     </div>
                 </p>
             {% endfor %}
+        {% else %}
+            <h4 class="mb-1">Oops! Ainda não existe nenhuma vaga no sistema!</h4>
         {% endif %}
     </div>
 </div>

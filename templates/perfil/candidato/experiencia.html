@@ -50,21 +50,22 @@
                     <input type="date" style="width: 373px;" name="data_fim" />
                 </p>
             </div>
-            <div>
-                <p>Descrição das Atividades</p>
-                {% if experiencias %}
-                {% for experiencia in experiencias %}
-                <textarea name="descricao" cols="50" rows="5" placeholder="{{experiencia.descricao}}"></textarea>
-                {% endfor %}
-                {% else %}
-                <input type="textarea" name="descricao"
-                    placeholder="Insira suas atividades principais aqui.">
-                {% endif %}
-                </div>
+            <p>
                 <div>
-                    <button type="submit" class="btn btn-outline-success">Confirmar</button>
+                    <h6 class="mb-1">Descrição das Atividades</h6>
+                    {% if experiencias %}
+                    {% for experiencia in experiencias %}
+                    <textarea name="descricao" cols="50" rows="5" placeholder="{{experiencia.descricao}}"></textarea>
+                    {% endfor %}
+                    {% else %}
+                    <textarea name="descricao" cols="50" rows="5" placeholder="Insira suas atividades principais aqui."></textarea>
+                    {% endif %}
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-outline-success">Confirmar</button>
+                    </div>
                 </div>
-            </div>
+            </p>
         </form>
     </div>
 </div>
