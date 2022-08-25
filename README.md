@@ -128,9 +128,9 @@ ENV PYTHONDONTWRITEBYTECODE=1
 
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /code
-
 RUN mkdir /code
+
+WORKDIR /code
 
 COPY requirements.txt /code/
 
